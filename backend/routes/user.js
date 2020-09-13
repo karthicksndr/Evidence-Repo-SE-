@@ -1,27 +1,16 @@
-const router= require('express').Router();
-let user= require('../models/user')
+const express = require("express")
+const router = express.Router();
 
-router.route('/').get((req,res) => {
-    user.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json({
-        error: "Cannot get user list"
-    }));
-});
+const { getUserById, getUser, updateUser, getAllUsers } = require('../controllers/user')
+const {isSignedIn,isAdmin,isAuthenticated} = require('../controllers/auth')
 
-router.route('/add').post((req, res)=> {
-    const userDetails = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        password: req.body.password,
-        email: req.body.email,
-        userType: req.body.userType
-    }
-    const newUser = new user(userDetails)
-    newUser.save()
-    .then(()=> res.json(newUser))
-    .catch(err => res.status(400).json('Error: '+err))
+router.param("userId" ,getUserById);
 
-})
 
-module.exports = router;
+router.get("/:userId", isSignedIn, isAuthenticated, getUser);
+
+router.get("/users/all", getAllUsers);
+
+router.put("/:userId", isSignedIn, isAdmin, isAuthenticated, updateUser)
+
+module.exports= router;

@@ -5,6 +5,7 @@
 4. email
 5. user type
 6. search history: 
+7. createdAt
 */
 
 const mongoose = require('mongoose')
@@ -15,11 +16,13 @@ const userSchema = new Schema({
     firstName: {
         type: String,
         required: true, 
+        maxlength: 32,
         trim: true
     }, 
     lastName: {
         type: String, 
         required: true, 
+        maxlength: 32,
         trim: true
     },
     password: {
@@ -40,8 +43,15 @@ const userSchema = new Schema({
     },
     searchHistory : {
         type: Array,
+    },
+    createdAt : {
+        type:Date,
+        required: true
     }
-
-})
+ },
+    {
+        timestamps : true
+    }
+);
 
 module.exports = mongoose.model('User', userSchema)
