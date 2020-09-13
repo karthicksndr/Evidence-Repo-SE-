@@ -53,7 +53,7 @@ exports.signIn = (req, res) => {
         }
 
         // create token using jsonwebtoken
-        const token = jwt.sign({ _id: user._id }, 'learncodeonline' );
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET );
         // put token in cookies
         res.cookie("token", token, {expire: new Date() + 999 });
         // send respond to front-end
