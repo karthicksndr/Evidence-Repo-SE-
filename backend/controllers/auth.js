@@ -92,7 +92,7 @@ exports.isAuthenticated = (req, res , next) => {
 }
 
 exports.isAdmin = (req, res , next) => {
-    if(req.profile.role === 0){
+    if(req.profile.userType != "Admin"){
         res.status(404).json({
             error: "You are not an ADMIN"
         })
