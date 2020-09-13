@@ -1,18 +1,3 @@
-/*
-1. title
-2. submitter
-3. author
-4. bibliogrphic_details
-5. ratings
-6. reviews
-7. approved/ not
-8. tags
-9. keywords
-10. date of submission
-11. type of paper
-12. abstract
-13. DOI Link
-*/
 
 const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema;

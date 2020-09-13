@@ -43,10 +43,6 @@ const userSchema = new Schema({
     },
     searchHistory : {
         type: Array,
-    },
-    createdAt : {
-        type:Date,
-        required: true
     }
  },
     {
