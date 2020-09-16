@@ -17,14 +17,14 @@ exports.getEvidence = (req, res) => {
 };
 
 exports.createEvidence = (req, res) => {
-    const exercise = new Evidence(req.body);
-    exercise.save((err, exercise) => {
+    const evidence = new Evidence(req.body);
+    evidence.save((err, evidence) => {
         if(err){
             return res.status(400).json({
-                error: "Unable to save in category"
+                error: "Unable to save in evidence"
             })
         }
-        res.json(exercise);
+        res.json(evidence);
     });
 }
 
