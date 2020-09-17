@@ -37,6 +37,9 @@ app.use('/user', userRouter)
 app.use('/evidence', evidenceRouter) 
 app.use('/auth',authRouter)
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static( '/build' ));
+}
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`)
