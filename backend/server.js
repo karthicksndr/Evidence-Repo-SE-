@@ -31,6 +31,8 @@ connection.once('open' ,() => {
     console.log("MongoDB connection established successfully")
 })
 
+
+
 app.use('/user', userRouter)
 app.use('/evidence', evidenceRouter) 
 app.use('/auth',authRouter)
