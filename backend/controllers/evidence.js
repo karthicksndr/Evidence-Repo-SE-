@@ -16,30 +16,61 @@ exports.getEvidence = (req, res) => {
     return res.json(req.evidence)
 };
 
+
+exports.filterEvidence = (req, res,next, seMethod) => {
+
+    const regex = new RegExp(["^", seMethod, "$"].join(""), "i")
+
+  Evidence.find({seMethod : regex }).exec((err,seMethod ) => {
+        if( err || !seMethod)
+        {
+            return err=> res.status(400).json(err)
+        }
+        req.seMethod = seMethod;
+        next();
+    })
+}
+
+exports.displayOnlySearch= (req, res) => {
+    return(res.json(req.seMethod))
+}
+
+exports.filterBasedOnYear = (req, res, next, year) => {
+
+    const filterC = { $and: [ { yearOfPublication: { $in: [year[0],year[1]] } }, { seMethod: ["TDD"] } ] }
+    Evidence.find(filterC).exec((err, result ) => {
+        if( err || !result)
+        {
+            return err=> res.status(400).json(err)
+        }
+        req.result = result;
+        next();
+    })
+    
+}
+
+exports.displayWithYear = (req, res) => {
+    res.json(req.param.seMethod)
+    res.json(req.param.year)
+}
+
+exports.getAllEvidences = (req, res) => {
+    Evidence.find({status: "Accepted"})
+    .then( evidence=> res.json(evidence))
+    .catch(err=> res.status(400).json(err))
+};
+
 exports.createEvidence = (req, res) => {
     const evidence = new Evidence(req.body);
-    evidence.save((err, evidence) => {
+    evidence.save((err, exercise) => {
         if(err){
             return res.status(400).json({
-                error: "Unable to save in evidence"
+                error: "Unable to save in category"
             })
         }
         res.json(evidence);
     });
 }
-
-exports.getAllEvidences = (req, res) => {
-   Evidence.find()
-   .exec((err, evidences) => {
-       if(err) {
-           res.status(400).json({
-              error: "Unable to retrieve evidences"
-          })
-      }
-        res.json(evidences)
-
-   });
-};
 
 exports.updateEvidence = (req, res) => {
     Evidence.findByIdAndUpdate(
