@@ -28,17 +28,18 @@ exports.createEvidence = (req, res) => {
     });
 }
 
-// exports.getAllEvidences = (req, res) => {
-//     Evidence.find()
-//     .exec((err, evidences) => {
-//         if(err) {
-//             res.status(400).json({
-//                 error: "Unable to retrieve evidences"
-//             })
-//         }
-//         res.json(evidences)
-//     });
-// };
+exports.getAllEvidences = (req, res) => {
+   Evidence.find()
+   .exec((err, evidences) => {
+       if(err) {
+           res.status(400).json({
+              error: "Unable to retrieve evidences"
+          })
+      }
+        res.json(evidences)
+
+   });
+};
 
 exports.updateEvidence = (req, res) => {
     Evidence.findByIdAndUpdate(

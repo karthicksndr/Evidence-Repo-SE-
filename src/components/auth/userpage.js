@@ -14,7 +14,7 @@ class Loginscreen extends Component {
             <p>Welcome to SEER. </p>
             <p>Suggest an article related to SE method.</p>
             </h4>
-            <Link to="/uploadscreen" className="link">
+            <Link to="/SubmitEvidence" className="link">
             <input type="submit" value="Submit Article" className="btn btn-primary" />
             </Link>
           </div>

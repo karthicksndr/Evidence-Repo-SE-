@@ -6,8 +6,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Register from "./././components/auth/Register";
 import Login from "./././components/auth/Login";
 import Loginscreen from "./././components/auth/Loginscreen";
-import Uploadscreen from "./././components/auth/UploadScreen";
+import SubmitEvidence from "./././components/auth/SubmitEvidence";
 import userpage from "./././components/auth/userpage";
+import Success from "./././components/auth/Success";
 
 class App extends Component {
   render() {
@@ -17,8 +18,9 @@ class App extends Component {
       <Route path="/login" exact component={Login} />
       <Route path="/register" exact component={Register} />
       <Route path="/loginscreen" exact component={Loginscreen} />
-      <Route path="/uploadscreen" exact component={Uploadscreen} />
       <Route path="/userpage" exact component={userpage} />
+      <Route path="/SubmitEvidence" exact component={SubmitEvidence} />
+      <Route path="/Success" exact component={Success} />
       </div>
       </Router>
     );

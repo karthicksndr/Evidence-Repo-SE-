@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router();
 
-const { getEvidenceById, getEvidence, createEvidence ,updateEvidence, removeEvidence} = require('../controllers/evidence')
+const { getEvidenceById, getEvidence, createEvidence, updateEvidence, removeEvidence, getAllEvidences} = require('../controllers/evidence')
 const {isSignedIn,isAdmin,isAuthenticated} = require('../controllers/auth')
 const {getUserById} = require('../controllers/user')
 
@@ -10,7 +10,9 @@ router.param("userId" ,getUserById);
 
 router.get("/:evidenceId", isSignedIn, getEvidence);
 
-router.post('/add', isSignedIn, createEvidence);
+router.post('/add', createEvidence);
+
+router.get('/evidences/all', getAllEvidences)
 
 router.put("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, updateEvidence)
 
