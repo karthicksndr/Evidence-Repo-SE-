@@ -1,5 +1,8 @@
 {
   "name": "s-seer",
   "version": "0.1.0",
-  "private": true
+  "private": true,
+  "engines": {
+    "node": "12.x"
+  }
 }
