@@ -7,22 +7,20 @@ const { getEvidenceById,
     updateEvidence, 
     removeEvidence,
     getAllEvidences,
-    filterEvidence,
-    displayOnlySearch, 
-    filterBasedOnYear,
-    displayWithYear
+    searchEvidence,
+
      } = require('../controllers/evidence')
 const {isSignedIn,isAdmin,isAuthenticated} = require('../controllers/auth')
 const {getUserById} = require('../controllers/user')
 
 router.param("evidenceId" ,getEvidenceById);
 router.param("userId" ,getUserById);
-router.param("seMethod", filterEvidence)
-router.param("year", filterBasedOnYear)
+// router.param("seMethod", filterEvidence)
+// router.param("year", filterBasedOnYear)
 
 router.get("/:evidenceId", isSignedIn, getEvidence);
 
-router.get("/search/:seMethod", displayOnlySearch)
+router.get("/", searchEvidence)
 
 // router.get("/search/:seMethod/:year", displayWithYear)
 

@@ -83,13 +83,11 @@ export default class searchEvidence extends Component {
         const fromYear= this.state.fromYear;
         const toYear= this.state.toYear;
        
-    //    console.log(searchString)
+       console.log(fromYear, toYear)
         
         if(searchString){
             if(fromYear && toYear){
-                console.log(fromYear , toYear)
-            }
-        axios.get("http://localhost:5000/evidence/search/"+searchString)
+                axios.get("http://localhost:5000/evidence/?search="+searchString+"&from="+fromYear+"&to="+toYear)
         .then(response => {
             this.setState ({
                 evidence : response.data
@@ -97,7 +95,18 @@ export default class searchEvidence extends Component {
             console.log(response.data)
         })
         .catch(err => console.log(err))
-        }
+            }
+            else{
+                axios.get("http://localhost:5000/evidence/?search="+searchString)
+                .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+                .catch(err => console.log(err))
+                }
+            }
         else{
         this.defaultDisplay()
         }

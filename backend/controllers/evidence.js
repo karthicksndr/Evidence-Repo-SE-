@@ -16,43 +16,74 @@ exports.getEvidence = (req, res) => {
     return res.json(req.evidence)
 };
 
+// exports.filterEvidence = (req, res,next, seMethod) => {
 
-exports.filterEvidence = (req, res,next, seMethod) => {
+//     const regex = new RegExp(["^", seMethod, "$"].join(""), "i")
 
-    const regex = new RegExp(["^", seMethod, "$"].join(""), "i")
+//   Evidence.find({seMethod : regex }).exec((err,seMethod ) => {
+//         if( err || !seMethod)
+//         {
+//             return err=> res.status(400).json(err)
+//         }
+//         req.seMethod = seMethod;
+//         next();
+//     })
+// }
 
-  Evidence.find({seMethod : regex }).exec((err,seMethod ) => {
-        if( err || !seMethod)
-        {
-            return err=> res.status(400).json(err)
-        }
-        req.seMethod = seMethod;
-        next();
-    })
-}
+exports.searchEvidence = (req, res) => {
 
-exports.displayOnlySearch= (req, res) => {
-    return(res.json(req.seMethod))
-}
-
-exports.filterBasedOnYear = (req, res, next, year) => {
-
-    const filterC = { $and: [ { yearOfPublication: { $in: [year[0],year[1]] } }, { seMethod: ["TDD"] } ] }
-    Evidence.find(filterC).exec((err, result ) => {
-        if( err || !result)
-        {
-            return err=> res.status(400).json(err)
-        }
-        req.result = result;
-        next();
-    })
+    const fromYear= req.query.from;
+    const toYear= req.query.to;
+    console.log(fromYear)
+    console.log(toYear)
     
+    const search= new RegExp(["^", req.query.search, "$"].join(""), "i")
+    console.log(search)
+    if(fromYear  == null){    
+        Evidence.find({seMethod : [search] }).exec((err,seMethod ) => {
+            if( err || !seMethod)
+            {
+                return err=> res.status(400).json(err)
+            }
+            res.json(seMethod)  
+        })
+    }
+    else {
+
+        const filter = { $and: [ { yearOfPublication: { $in: [fromYear,toYear] }} , { seMethod: [search] } ] }
+    
+        Evidence.find(filter).exec((err,seMethod ) => {
+            if( err || !seMethod)
+            {
+                return err=> res.status(400).json(err)
+            }
+            res.json(seMethod)  
+        })
+    }
 }
 
-exports.displayWithYear = (req, res) => {
-    res.json(req.param.seMethod)
-    res.json(req.param.year)
-}
+// exports.displayOnlySearch= (req, res) => {
+//     return(res.json(req.seMethod))
+// }
+
+// exports.filterBasedOnYear = (req, res, next, year) => {
+
+//     const filterC = { $and: [ { yearOfPublication: { $in: [year[0],year[1]] } }, { seMethod: ["TDD"] } ] }
+//     Evidence.find(filterC).exec((err, result ) => {
+//         if( err || !result)
+//         {
+//             return err=> res.status(400).json(err)
+//         }
+//         req.result = result;
+//         next();
+//     })
+    
+// }
+
+// exports.displayWithYear = (req, res) => {
+//     res.json(req.param.seMethod)
+//     res.json(req.param.year)
+// }
 
 exports.getAllEvidences = (req, res) => {
     Evidence.find({status: "Accepted"})
