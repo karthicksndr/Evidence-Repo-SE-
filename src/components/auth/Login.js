@@ -61,7 +61,7 @@ class Login extends Component {
             <div style={{marginTop: 10}}>
                 <div className="jumbotron">
               <h2>
-              <b>Software Engineering Evidence Repository - SEER{" "}</b>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
               </h2>
              </div>
                 <h3>Login to SEER</h3>

@@ -7,7 +7,7 @@ class Loginscreen extends Component {
             <div className="container">
              <div className="jumbotron">
               <h2>
-              <b>Software Engineering Evidence Repository - SEER{" "}</b>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
               </h2>
              </div>
             <h4>

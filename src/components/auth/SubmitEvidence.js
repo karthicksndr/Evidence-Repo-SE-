@@ -104,7 +104,12 @@ export default class SubmitEvidence extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
+            <div className="jumbotron">
+              <h2>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
+              </h2>
+             </div>
                 <h3>Create New Evidence </h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">

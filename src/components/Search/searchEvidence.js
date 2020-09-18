@@ -114,8 +114,13 @@ export default class searchEvidence extends Component {
 
     render() {
         return (
-            <div>
-                <h4> Please use the searchbox to filter evideces realted to your SE Method</h4>
+            <div className="container">
+                 <div className="jumbotron">
+              <h2>
+              <b>Software Engineering Evidence Repository - SEER{" "}</b>
+              </h2>
+             </div>
+                <h4> Please use the searchbox to filter evideces related to your SE Method</h4>
                 <br/>
                 <input 
                 className="form-control" 

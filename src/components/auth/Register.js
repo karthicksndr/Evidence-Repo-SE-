@@ -80,7 +80,7 @@ class Create extends Component {
             <div style={{marginTop: 10}}>
             <div className="jumbotron">
             <h1> 
-            <b>Software Engineering Evidence Repository - SEER{" "}</b>
+            <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
            </h1>      
            </div>
             <h3><b>Register to SEER{" "}</b></h3>

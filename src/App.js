@@ -9,13 +9,17 @@ import Loginscreen from "./././components/auth/Loginscreen";
 import SubmitEvidence from "./././components/auth/SubmitEvidence";
 import userpage from "./././components/auth/userpage";
 import Success from "./././components/auth/Success";
-import Search from "./components/Search/searchEvidence"
+import Search from "./components/Search/searchEvidence";
+import Landing from "./components/home/landing";
+import Navbar from "./components/home/navbar"
 
 class App extends Component {
   render() {
     return (
       <Router>
+        <Navbar />
       <div className="container">
+      <Route path="/" exact component={Landing} />
       <Route path="/login" exact component={Login} />
       <Route path="/register" exact component={Register} />
       <Route path="/loginscreen" exact component={Loginscreen} />

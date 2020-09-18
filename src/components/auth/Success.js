@@ -7,6 +7,11 @@ export default class Success extends Component {
         return (
 
             <div className="container">
+                <div className="jumbotron">
+              <h2>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
+              </h2>
+             </div>
                 <br />
 
                 <h3><center>You have successfully submitted the paper!</center></h3>

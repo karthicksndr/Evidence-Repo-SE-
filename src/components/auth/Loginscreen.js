@@ -7,15 +7,15 @@ class Loginscreen extends Component {
             <div className="container">
              <div className="jumbotron">
               <h2>
-              <b>Software Engineering Evidence Repository - SEER{" "}</b>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
               </h2>
              </div>
             <h4>
-            <p>Congratulations!! You are now registered to SEER. </p>
-            <p>Please use your email address for login.</p>
+            <p><center>Congratulations!! You are now registered to SEER. </center></p>
+            <p><center>Please use your email address for login.</center></p>
             </h4>
             <Link to="/login" className="link">
-            <h5><input type="submit" value="Login to SEER" className="btn btn-primary" /></h5>
+            <h5><center><input type="submit" value="Login to SEER" className="btn btn-primary" /></center></h5>
             </Link>
           </div>
           
