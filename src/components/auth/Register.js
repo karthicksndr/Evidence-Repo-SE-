@@ -61,7 +61,7 @@ class Create extends Component {
           password: this.state.password,
     //    userType: this.state.userType
       };
-        axios.post('http://localhost:5000/auth/signup', user)
+        axios.post('http://localhost:8000/auth/signup', user)
         .then((result) => {
             this.props.history.push("/loginscreen")
           });
