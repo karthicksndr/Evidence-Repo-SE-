@@ -26,7 +26,7 @@ export default class searchEvidence extends Component {
     defaultDisplay()  {
         axios({
             method: "get",
-            url: "http://localhost:5000/evidence/evidences/all"
+            url: "http://localhost:8000/evidence/evidences/all"
         })
         .then(response => {
             this.setState ({
