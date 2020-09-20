@@ -31,16 +31,17 @@ exports.getEvidence = (req, res) => {
 // }
 
 exports.searchEvidence = (req, res) => {
-
+    const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
     const fromYear= req.query.from;
     const toYear= req.query.to;
     console.log(fromYear)
     console.log(toYear)
     
-    const search= new RegExp(["^", req.query.search, "$"].join(""), "i")
-    console.log(search)
+    
+    console.log(filter)
+
     if(fromYear  == null){    
-        Evidence.find({seMethod : [search] }).exec((err,seMethod ) => {
+        Evidence.find({seMethod: filter}).exec((err,seMethod ) => {
             if( err || !seMethod)
             {
                 return err=> res.status(400).json(err)
@@ -50,9 +51,9 @@ exports.searchEvidence = (req, res) => {
     }
     else {
 
-        const filter = { $and: [ { yearOfPublication: { $in: [fromYear,toYear] }} , { seMethod: [search] } ] }
+        const query = {$and : [ {seMethod: filter}, {yearOfPublication: { $gte: fromYear }} , {yearOfPublication: { $lte: toYear }}]}
     
-        Evidence.find(filter).exec((err,seMethod ) => {
+        Evidence.find(query).exec((err,seMethod ) => {
             if( err || !seMethod)
             {
                 return err=> res.status(400).json(err)

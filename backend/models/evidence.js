@@ -31,7 +31,7 @@ const paperSchema= new Schema ({
         required: true
     },
     seMethod : {
-        type: Array
+        type: String
     },
     outcome: {
         type: String,
