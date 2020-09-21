@@ -36,7 +36,7 @@ class Login extends Component {
           password: this.state.password
       };
 
-        axios.post('http://localhost:5000/auth/signin', loggeduser)
+        axios.post('/auth/signin', loggeduser)
         .then(res => {
             if (res.status === 200) {
               localStorage.setItem('jwtToken', res.data.token);

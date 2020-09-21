@@ -26,7 +26,7 @@ export default class searchEvidence extends Component {
     defaultDisplay()  {
         axios({
             method: "get",
-            url: "http://localhost:5000/evidence/evidences/all"
+            url: "/evidence/evidences/all"
         })
         .then(response => {
             this.setState ({
@@ -87,7 +87,7 @@ export default class searchEvidence extends Component {
         
         if(searchString){
             if(fromYear && toYear){
-                axios.get("http://localhost:5000/evidence/?search="+searchString+"&from="+fromYear+"&to="+toYear)
+                axios.get("/evidence/?search="+searchString+"&from="+fromYear+"&to="+toYear)
         .then(response => {
             this.setState ({
                 evidence : response.data
@@ -97,7 +97,7 @@ export default class searchEvidence extends Component {
         .catch(err => console.log(err))
             }
             else{
-                axios.get("http://localhost:5000/evidence/?search="+searchString)
+                axios.get("/evidence/?search="+searchString)
                 .then(response => {
                     this.setState ({
                         evidence : response.data
