@@ -1,30 +1,15 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Select from 'react-select';
 
 const Methods = [
-    {
-      label: "Select",
-      value: "Select",
-    },
     {
         label: "TDD",
         value: "TDD",
     },
-    // {
-    //   label: "Agile",
-    //   value: "Agile",
-    // },
-    // {
-    //     label: "Cloud",
-    //     value: "Cloud",
-    //   },
   ];
 
   const Claims = [
-    {
-      label: "Select",
-      value: "Select",
-    },
     {
         label: "Improve Code Quality",
         value: "Improve Code Quality",
@@ -44,15 +29,16 @@ export default class searchEvidence extends Component {
         super(props)
 
         this.displayEvidence= this.displayEvidence.bind(this);
-        this.onChangeseMethod= this.onChangeseMethod.bind(this);
-        this.onChangeclaims= this.onChangeclaims.bind(this);
+        this.handleChangeSearch= this.handleChangeSearch.bind(this);
+        this.handleChangeSearch1= this.handleChangeSearch1.bind(this);
         this.onSubmitSearch= this.onSubmitSearch.bind(this);
     //  this.fetchFromYear= this.fetchFromYear.bind(this);
     //  this.fetchToYear = this.fetchToYear.bind(this);
 
         this.state = {
-            searchseMethod : '',
+            searchseMethod : [],
             searchclaims : [],
+            selected: '',
             evidence: [],
             // fromYear: '',
             // toYear: ''
@@ -73,6 +59,7 @@ export default class searchEvidence extends Component {
             })
         })
         .catch(err => console.log(err))
+        
     }
 
     displayEvidence = (evidence) => {
@@ -99,19 +86,17 @@ export default class searchEvidence extends Component {
         )));
     }
 
-    onChangeseMethod(e) {
-        this.setState ({
-            searchseMethod: e.target.value
-        })
-     console.log(this.state.searchseMethod)
-    }
-
-    onChangeclaims(e) {
-        this.setState ({
-            searchclaims: e.target.value
-        })
-      console.log(this.state.searchclaims)
-    }
+    handleChangeSearch(e){
+        console.log(e)
+        this.setState({searchseMethod:e.label})
+        
+       }
+      
+       handleChangeSearch1(e){
+        console.log(e)
+        this.setState({searchclaims:e.label})
+        
+       }
 
     // fetchFromYear(e){
     //     this.setState ({
@@ -133,7 +118,7 @@ export default class searchEvidence extends Component {
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
         axios.get("http://localhost:5000/evidence/?search="+searchseMethod+"&search1="+searchclaims)
-      //   axios.get("http://localhost:5000/evidence/?search="+searchseMethod)
+     // axios.get("http://localhost:5000/evidence/?search="+seMethod)
         .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -147,33 +132,6 @@ export default class searchEvidence extends Component {
         // const toYear= this.state.toYear;
        
     //    console.log(fromYear, toYear)
-        
-        // if(searchseMethod){
-        //     if(searchclaims){
-        //         axios.get("http://localhost:5000/evidence/?search="+searchseMethod+searchclaims)
-        // .then(response => {
-        //     this.setState ({
-        //         evidence : response.data
-        //     })
-        //     console.log(response.data)
-        // })
-        // .catch(err => console.log(err))
-        //     }
-        //     else 
-        //     if(searchseMethod) {
-        //         axios.get("http://localhost:5000/evidence/?search="+searchseMethod+searchclaims)
-        //         .then(response => {
-        //             this.setState ({
-        //                 evidence : response.data
-        //             })
-        //             console.log(response.data)
-        //         })
-        //         .catch(err => console.log(err))
-        //         }
-        // else {
-        // this.defaultDisplay()
-        // }
-  // }
 
     render()
      {
@@ -184,45 +142,16 @@ export default class searchEvidence extends Component {
               <b>Software Engineering Evidence Repository - SEER{" "}</b>
               </h2>
              </div>
-                <h5> Enter SE Method</h5>
-                {/* <input 
-                className="form-control" 
-                type="text" 
-                placeholder="TDD" 
-                aria-label="Search"
-                value= {this.state.searchseMethod}
-                onChange={this.onChangeseMethod}
-                />   */}
-                <div id="App">
-                <div className="select-container">
-                <select value={this.state.searchseMethod} onChange={this.onChangeseMethod}>
-                {Methods.map((option) => (
-                <option value={option.value}>{option.label}</option>
-                             ))}
-                </select>
+                <h5> Select SE Method</h5>
+                <div>
+                <Select options={Methods} onChange={this.handleChangeSearch}/>
                 </div>
-                </div>
-
                 <br/>
-                <h5> Enter Claims for selected SE Method</h5>
-                {/* <input 
-                className="form-control" 
-                type="text" 
-                placeholder="Improve Code Quality" 
-                aria-label="Search"
-                value= {this.state.searchclaims}
-                onChange={this.onChangeclaims}
-                />
-                <br/> */}
-                <div id="App">
-                <div className="select-container">
-                <select value={this.state.searchclaims} onChange={this.onChangeclaims}>
-                {Claims.map((option) => (
-                <option value={option.value}>{option.label}</option>
-                             ))}
-                </select>
+                <h5> Select Claim for selected SE Method</h5>
+                <div>
+                <Select options={Claims} onChange={this.handleChangeSearch1}/>
                 </div>
-                </div>
+                <br/>
                 {/* <div className="year-filter"> 
                     <label for="fromYear">From</label>&nbsp;
                     <input

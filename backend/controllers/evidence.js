@@ -1,3 +1,4 @@
+const { Label } = require('reactstrap');
 const Evidence = require('../models/evidence')
 
 exports.getEvidenceById = (req,res,next,id) => {
@@ -53,7 +54,7 @@ exports.searchEvidence = (req, res) => {
     }
     else 
     {
-        const query = {$and : [ {seMethod: filter}, {claims: filter1 }]}
+        const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
     
         Evidence.find(query).exec((err,seMethod ) => {
             if( err || !seMethod)
