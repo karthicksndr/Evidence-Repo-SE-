@@ -36,6 +36,12 @@ const paperSchema= new Schema ({
     outcome: {
         type: String,
     },
+    claims: {
+        type: String,
+    },
+    degreeofevidence: {
+        type: String,
+    },
     status : {
         type: String,
         required: true

@@ -1,3 +1,4 @@
+const { Label } = require('reactstrap');
 const Evidence = require('../models/evidence')
 
 exports.getEvidenceById = (req,res,next,id) => {
@@ -32,15 +33,17 @@ exports.getEvidence = (req, res) => {
 
 exports.searchEvidence = (req, res) => {
     const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
-    const fromYear= req.query.from;
-    const toYear= req.query.to;
-    console.log(fromYear)
-    console.log(toYear)
+    const filter1 = new RegExp(["^", req.query.search1, "$"].join(""), "i");
+//  const fromYear= req.query.from;
+//  const toYear= req.query.to;
+//  console.log(fromYear)
+//  console.log(toYear)
     
     
     console.log(filter)
 
-    if(fromYear  == null){    
+   if (filter1 == null)
+    {    
         Evidence.find({seMethod: filter}).exec((err,seMethod ) => {
             if( err || !seMethod)
             {
@@ -49,9 +52,9 @@ exports.searchEvidence = (req, res) => {
             res.json(seMethod)  
         })
     }
-    else {
-
-        const query = {$and : [ {seMethod: filter}, {yearOfPublication: { $gte: fromYear }} , {yearOfPublication: { $lte: toYear }}]}
+    else 
+    {
+        const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
     
         Evidence.find(query).exec((err,seMethod ) => {
             if( err || !seMethod)
@@ -63,9 +66,9 @@ exports.searchEvidence = (req, res) => {
     }
 }
 
-// exports.displayOnlySearch= (req, res) => {
-//     return(res.json(req.seMethod))
-// }
+exports.displayOnlySearch= (req, res) => {
+    return(res.json(req.seMethod))
+}
 
 // exports.filterBasedOnYear = (req, res, next, year) => {
 
