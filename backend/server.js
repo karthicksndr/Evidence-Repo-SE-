@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 
 const uri= process.env.ATLAS_URI;
-mongoose.connect(uri,{
+mongoose.connect(process.env.MONGODB_URI,{
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
