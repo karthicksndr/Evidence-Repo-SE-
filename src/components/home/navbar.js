@@ -16,6 +16,9 @@ export default class Navbar extends Component {
           <li className="navbar-item">
           <Link to="/search" className="nav-link">Search SEER</Link>
           </li>
+          <li className="navbar-item">
+          <Link to="/SubmitEvidence" className="nav-link">Submit Articles</Link>
+          </li>
 
         </ul>
         </div>
