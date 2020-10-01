@@ -36,7 +36,7 @@ app.use('/evidence', evidenceRouter)
 app.use('/auth',authRouter)
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static( '/build' ));
+    app.use(express.static( '/client/build' ));
 }
 
 app.listen(port, () => {
