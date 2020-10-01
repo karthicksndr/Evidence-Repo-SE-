@@ -51,7 +51,7 @@ export default class searchEvidence extends Component {
     defaultDisplay()  {
         axios({
             method: "get",
-            url: "http://localhost:5000/evidence/evidences/all"
+            url: "/evidence/evidences/all"
         })
         .then(response => {
             this.setState ({
@@ -117,7 +117,7 @@ export default class searchEvidence extends Component {
         
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
-        axios.get("http://localhost:5000/evidence/?search="+searchseMethod+"&search1="+searchclaims)
+        axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims)
      // axios.get("http://localhost:5000/evidence/?search="+seMethod)
         .then(response => {
                 this.setState ({
