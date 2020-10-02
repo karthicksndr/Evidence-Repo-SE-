@@ -104,7 +104,6 @@ export default class searchEvidence extends Component {
     //     })
     // //  console.log(this.state.fromYear)
     // }
-
     // fetchToYear(e){
     //     this.setState ({
     //         toYear: e.target.value
