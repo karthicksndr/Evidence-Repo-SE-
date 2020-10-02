@@ -6,6 +6,7 @@ const userRouter= require('./routes/user')
 const authRouter = require ('./routes/auth')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 require('dotenv').config();
 
@@ -37,6 +38,7 @@ app.use('/auth',authRouter)
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static( '/client/build' ));
+   
 }
 
 app.listen(port, () => {
