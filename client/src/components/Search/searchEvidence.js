@@ -69,7 +69,7 @@ export default class searchEvidence extends Component {
         }
 
       //  console.log(evidence[0])
-        return ( evidence.map((evidence, index) => (
+        return ( this.state.evidence.map((evidence, index) => (
             <tr key={index}>
                 <td>{evidence.seMethod}</td>
                 <td>{evidence.claims}</td>
