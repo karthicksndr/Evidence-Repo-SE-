@@ -32,14 +32,17 @@ connection.once('open' ,() => {
     console.log("MongoDB connection established successfully")
 })
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 app.use('/user', userRouter)
 app.use('/evidence', evidenceRouter) 
 app.use('/auth',authRouter)
-
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static( '/client/build' ));
-   
-}
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`)
