@@ -97,7 +97,7 @@ export default class SubmitEvidence extends Component {
 
         console.log(evidence);
 
-        axios.post('http://localhost:5000/evidence/add', evidence)
+        axios.post('/evidence/add', evidence)
 
         window.location = '/success';
     }
