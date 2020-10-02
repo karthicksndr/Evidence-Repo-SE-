@@ -57,6 +57,7 @@ export default class searchEvidence extends Component {
             this.setState ({
                 evidence : response.data
             })
+            console.log(this.state.evidence)
         })
         .catch(err => console.log(err))
         
