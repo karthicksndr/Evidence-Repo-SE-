@@ -70,6 +70,9 @@ export default class searchEvidence extends Component {
         }
 
       //  console.log(evidence[0])
+      if (this.state.evidence === undefined) 
+      { return <div>Loading....</div>; }
+      else
         return ( this.state.evidence.map((evidence, index) => (
             <tr key={index}>
                 <td>{evidence.seMethod}</td>
