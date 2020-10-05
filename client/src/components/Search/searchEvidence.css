@@ -4,5 +4,6 @@
     border-radius: 0;
     height: 30px;
     background: transparent;
-    border-color: white; 
+    border-color: white;
+    float:right;
 }
