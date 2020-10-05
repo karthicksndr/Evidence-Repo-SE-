@@ -22,12 +22,12 @@ exports.searchEvidence = (req, res) => {
     const filter1 =  req.query.search1
     const claim = filter1.split(',')
     console.log(claim)
-
+    const claimLength = claim.length;
     const sortBy= req.query.sort
     const value= req.query.value
     
         if(sortBy == null){
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -51,7 +51,7 @@ exports.searchEvidence = (req, res) => {
         }
     }
     else if(sortBy == "author"){ 
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).sort({author : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -75,7 +75,7 @@ exports.searchEvidence = (req, res) => {
         }
     }
     else if(sortBy == "title"){ 
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).sort({title : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -99,7 +99,7 @@ exports.searchEvidence = (req, res) => {
         }
     }
     else if(sortBy == "yearOfPublication"){ 
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).sort({yearOfPublication : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
