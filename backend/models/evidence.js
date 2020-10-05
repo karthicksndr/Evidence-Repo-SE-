@@ -59,10 +59,6 @@ const paperSchema= new Schema ({
     submitter: {
         type: ObjectId,
         ref: "User",
-    },
-     detailfile: {
-        data: Buffer,
-        contentType: String
     }
 },
     { timestamps: true  }

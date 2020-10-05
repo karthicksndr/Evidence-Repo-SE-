@@ -6,9 +6,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Loginscreen from "./components/auth/Loginscreen";
-import SubmitEvidence from "./components/Submit/SubmitEvidence";
+import SubmitEvidence from "./components/auth/SubmitEvidence";
 import userpage from "./components/auth/userpage";
-import Success from "./components/Submit/Success";
+import Success from "./components/auth/Success";
 import Search from "./components/Search/searchEvidence";
 import Landing from "./components/home/landing";
 import Navbar from "./components/home/navbar"

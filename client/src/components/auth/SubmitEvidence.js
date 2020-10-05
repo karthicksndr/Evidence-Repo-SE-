@@ -1,11 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { useForm } from 'react-hook-form';
 
 export default class SubmitEvidence extends Component {
-    
-
     constructor(props) {
         super(props);
 
@@ -19,7 +17,7 @@ export default class SubmitEvidence extends Component {
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
-        this.state= {
+        this.state = {
             typeOfPaper: '',
             title: '',
             author: '',
@@ -99,14 +97,19 @@ export default class SubmitEvidence extends Component {
 
         console.log(evidence);
 
-        axios.post('http://localhost:5000/evidence/add', evidence)
+        axios.post('/evidence/add', evidence)
 
         window.location = '/success';
     }
 
     render() {
         return (
-            <div>
+            <div className="container">
+            <div className="jumbotron">
+              <h2>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
+              </h2>
+             </div>
                 <h3>Create New Evidence </h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -165,15 +168,6 @@ export default class SubmitEvidence extends Component {
                             value={this.state.yearOfPublication}
                             onChange={this.onChangeYear}
                         />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Bibliographic Detail Document : </label>
-                        <input
-                            type="file"
-                            className="form-control"
-
-                       />
                     </div>
 
                     <div className="form-group">
