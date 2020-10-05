@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import './searchEvidence.css'
 
 const Methods = [
     {
@@ -32,16 +33,18 @@ export default class searchEvidence extends Component {
         this.handleChangeSearch= this.handleChangeSearch.bind(this);
         this.handleChangeSearch1= this.handleChangeSearch1.bind(this);
         this.onSubmitSearch= this.onSubmitSearch.bind(this);
-    //  this.fetchFromYear= this.fetchFromYear.bind(this);
-    //  this.fetchToYear = this.fetchToYear.bind(this);
+        this.handleChangeSort= this.handleChangeSort.bind(this);
+        this.fetchFromYear= this.fetchFromYear.bind(this);
+        this.fetchToYear = this.fetchToYear.bind(this);
 
         this.state = {
             searchseMethod : [],
             searchclaims : [],
             selected: '',
             evidence: [],
-            // fromYear: '',
-            // toYear: ''
+            sort: [],
+            fromYear: '',
+            toYear: ''
         }
     };
     componentDidMount() {
@@ -51,13 +54,12 @@ export default class searchEvidence extends Component {
     defaultDisplay()  {
         axios({
             method: "get",
-            url: "/evidence/evidences/all"
+            url: "http://localhost:5000/evidence/evidences/all"
         })
         .then(response => {
             this.setState ({
                 evidence : response.data
             })
-            console.log(this.state.evidence)
         })
         .catch(err => console.log(err))
         
@@ -69,8 +71,7 @@ export default class searchEvidence extends Component {
             return null;
         }
 
-      //  console.log(evidence[0])
-        return (evidence.map((evidence, index) => (
+        return ( evidence.map((evidence, index) => (
             <tr key={index}>
                 <td>{evidence.seMethod}</td>
                 <td>{evidence.claims}</td>
@@ -99,25 +100,72 @@ export default class searchEvidence extends Component {
         
        }
 
-    // fetchFromYear(e){
-    //     this.setState ({
-    //         fromYear: e.target.value
-    //     })
-    // //  console.log(this.state.fromYear)
-    // }
-    // fetchToYear(e){
-    //     this.setState ({
-    //         toYear: e.target.value
-    //     })
-    // // console.log(this.state.toYear)
-    // }
+    fetchFromYear =  async function (e) {
+        await  this.setState ({
+            fromYear: e.target.value
+        })
+     console.log(this.state.fromYear)
+    }
+
+    fetchToYear =  async function (e) {
+        await  this.setState ({
+            toYear: e.target.value
+        })
+     console.log(this.state.toYear)
+    }
+
+    handleChangeSort= async function(e){
+        await this.setState({sort:e.target.value})
+       // console.log(this.state.sort)
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+        const sortType= this.state.sort;
+
+        if(sortType === "Author (A-Z)"){
+            var sortBy= "author";
+            var value= 1
+        }
+        else if(sortType === "Author (Z-A)"){
+            var sortBy= "author";
+            var value= -1
+        }
+        else if(sortType === "Title (A-Z)")
+        {
+            var sortBy= "title";
+            var value= 1
+        }
+        else if(sortType === "Title (Z-A)")
+        {
+            var sortBy= "title";
+            var value= -1
+        }
+        else if(sortType === "Publication Year (low-high)"){
+            var sortBy = "yearOfPublication";
+            var value= 1
+        }
+        else if(sortType === "Publication Year (high-low)"){
+            var sortBy = "yearOfPublication";
+            var value= -1
+        }
+
+        console.log(sortBy)
+
+        axios.get("http://localhost:5000/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+        .then(response => {
+                this.setState ({
+                    evidence : response.data
+                })
+                console.log(response.data)
+            })
+            .catch(err => console.log(err))
+       }
 
     onSubmitSearch(e) {
         e.preventDefault();
         
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
-        axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims)
+        axios.get("http://localhost:5000/evidence/?search="+searchseMethod+"&search1="+searchclaims)
      // axios.get("http://localhost:5000/evidence/?search="+seMethod)
         .then(response => {
                 this.setState ({
@@ -127,11 +175,6 @@ export default class searchEvidence extends Component {
             })
             .catch(err => console.log(err))
                 }
-
-        // const fromYear= this.state.fromYear;
-        // const toYear= this.state.toYear;
-       
-    //    console.log(fromYear, toYear)
 
     render()
      {
@@ -143,7 +186,7 @@ export default class searchEvidence extends Component {
               </h2>
              </div>
                 <h5> Select SE Method</h5>
-                <div>
+                <div className="select-box">
                 <Select options={Methods} onChange={this.handleChangeSearch}/>
                 </div>
                 <br/>
@@ -170,12 +213,31 @@ export default class searchEvidence extends Component {
                      onChange={this.fetchToYear}
                      />
                 </div> */}
+                {/*<div id="slider">
+                    <output id="rangevalue">1970</output>
+                    <input className="bar" type="range" id="rangeinput" min="1970" max="2020" onChange={this.fetchFromYear} />
+                    <span className="highlight"></span>
+                    <output id="rangevalue">2020</output>
+                </div>*/}
                 <br/>
                 <button type="button" 
                 className="btn btn-primary btn-lg" 
               //  value={this.state.searchString}
                 onClick={this.onSubmitSearch}
                 >Search</button>
+                <br/>
+                &nbsp;
+                <div className="sort">
+                <select onChange={this.handleChangeSort}>
+                    <option label="Sort By" disabled selected>Sort By</option>
+                    <option label="Author (A-Z)">Author (A-Z)</option>
+                    <option label="Author (Z-A)">Author (Z-A)</option>
+                    <option label="Title (A-Z)">Title (A-Z)</option>
+                    <option label="Title (Z-A)">Title (Z-A)</option>
+                    <option label="Publication Year (low-high)">Publication Year (low-high)</option>
+                    <option label="Publication Year (high-low)">Publication Year (high-low)</option>
+                </select>
+                </div>
                 <br/>
                 <br/>
                 <table className="table">
