@@ -238,6 +238,7 @@ export default class searchEvidence extends Component {
                 </select>
                 </div>
                 <br/>
+                <br/>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
