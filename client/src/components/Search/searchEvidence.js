@@ -54,7 +54,7 @@ export default class searchEvidence extends Component {
     defaultDisplay()  {
         axios({
             method: "get",
-            url: "http://localhost:5000/evidence/evidences/all"
+            url: "/evidence/evidences/all"
         })
         .then(response => {
             this.setState ({
@@ -150,7 +150,7 @@ export default class searchEvidence extends Component {
 
         console.log(sortBy)
 
-        axios.get("http://localhost:5000/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+        axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
         .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -165,8 +165,7 @@ export default class searchEvidence extends Component {
         
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
-        axios.get("http://localhost:5000/evidence/?search="+searchseMethod+"&search1="+searchclaims)
-     // axios.get("http://localhost:5000/evidence/?search="+seMethod)
+        axios.get("evidence/?search="+searchseMethod+"&search1="+searchclaims)
         .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -238,7 +237,6 @@ export default class searchEvidence extends Component {
                     <option label="Publication Year (high-low)">Publication Year (high-low)</option>
                 </select>
                 </div>
-                <br/>
                 <br/>
                 <table className="table">
                     <thead className="thead-light">

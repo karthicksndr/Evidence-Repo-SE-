@@ -1,4 +1,6 @@
 .sort{
-    width: 15%;
-    position: right;
+    width: 15%; /* Full-width */
+    position: relative;
+    border-radius: 0;
+    height: 20px;
 }
