@@ -12,7 +12,6 @@ import Success from "./components/Submit/Success";
 import Search from "./components/Search/searchEvidence";
 import Landing from "./components/home/landing";
 import Navbar from "./components/home/navbar"
-import Analyst from "./components/Analyst/analystView"
 
 class App extends Component {
   render() {
