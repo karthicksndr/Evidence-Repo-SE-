@@ -33,7 +33,9 @@ exports.getEvidence = (req, res) => {
 
 exports.searchEvidence = (req, res) => {
     const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
-    const filter1 = new RegExp(["^", req.query.search1, "$"].join(""), "i");
+    const filter1 =  req.query.search1
+    const claim = filter1.split(',')
+    console.log(claim)
 
     const sortBy= req.query.sort
     const value= req.query.value
@@ -51,7 +53,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -75,7 +77,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).sort({author : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -99,7 +101,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).sort({title : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -123,7 +125,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).sort({yearOfPublication : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)

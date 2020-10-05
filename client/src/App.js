@@ -12,6 +12,7 @@ import Success from "./components/auth/Success";
 import Search from "./components/Search/searchEvidence";
 import Landing from "./components/home/landing";
 import Navbar from "./components/home/navbar"
+import Analyst from "./components/Analyst/analystView"
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
       <Route path="/SubmitEvidence" exact component={SubmitEvidence} />
       <Route path="/Success" exact component={Success} />
       <Route path="/search" exact component={Search} />
+      <Route path="/analyst" exact component={Analyst} />
       </div>
       </Router>
     );

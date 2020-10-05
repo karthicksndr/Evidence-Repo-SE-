@@ -1,6 +1,11 @@
-.sort{
+.sort select{
     width: 15%; /* Full-width */
     position: relative;
     border-radius: 0;
-    height: 20px;
+    height: 30px;
+    background: transparent;
+    border-color: white; 
+    float:right;
 }
+
+
