@@ -84,8 +84,7 @@ export default class searchEvidence extends Component {
                 <td>{evidence.author}</td>
                 <td>{evidence.yearOfPublication}</td>
                 <td>{evidence.doiLink}</td>
-                {/* <td>{evidence.outcome}</td>
-                <td>{evidence.rating}</td> */}
+
             </tr>
         )));
     }
@@ -118,7 +117,6 @@ export default class searchEvidence extends Component {
 
     handleChangeSort= async function(e){
         await this.setState({sort:e.target.value})
-       // console.log(this.state.sort)
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
         const sortType= this.state.sort;
@@ -217,7 +215,6 @@ export default class searchEvidence extends Component {
                     <option label="Publication Year (high-low)">Publication Year (high-low)</option>
                 </select>
                 </div>
-                <br/>
                 <br/>
                 <table className="table">
                     <thead className="thead-light">

@@ -17,20 +17,6 @@ exports.getEvidence = (req, res) => {
     return res.json(req.evidence)
 };
 
-// exports.filterEvidence = (req, res,next, seMethod) => {
-
-//     const regex = new RegExp(["^", seMethod, "$"].join(""), "i")
-
-//   Evidence.find({seMethod : regex }).exec((err,seMethod ) => {
-//         if( err || !seMethod)
-//         {
-//             return err=> res.status(400).json(err)
-//         }
-//         req.seMethod = seMethod;
-//         next();
-//     })
-// }
-
 exports.searchEvidence = (req, res) => {
     const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
     const filter1 =  req.query.search1

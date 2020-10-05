@@ -28,7 +28,6 @@ class App extends Component {
       <Route path="/SubmitEvidence" exact component={SubmitEvidence} />
       <Route path="/Success" exact component={Success} />
       <Route path="/search" exact component={Search} />
-      <Route path="/analyst" exact component={Analyst} />
       </div>
       </Router>
     );
