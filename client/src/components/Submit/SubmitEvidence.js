@@ -1,7 +1,7 @@
-import { Component } from 'react';
+import React, { Component }  from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { useForm } from 'react-hook-form';
 
 export default class SubmitEvidence extends Component {
     
@@ -106,7 +106,12 @@ export default class SubmitEvidence extends Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
+            <div className="jumbotron">
+              <h2>
+              <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
+              </h2>
+             </div>
                 <h3>Create New Evidence </h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -168,15 +173,6 @@ export default class SubmitEvidence extends Component {
                     </div>
 
                     <div className="form-group">
-                        <label>Bibliographic Detail Document : </label>
-                        <input
-                            type="file"
-                            className="form-control"
-
-                       />
-                    </div>
-
-                    <div className="form-group">
                         <label>Date: </label>
                         <div>
                             <DatePicker
@@ -185,11 +181,6 @@ export default class SubmitEvidence extends Component {
                             />
                         </div>
                     </div>
-
-
-
-
-
                     <div className="form-group">
                         <input type="submit" value="Create Evidence" className="btn btn-primary" />
                     </div>
