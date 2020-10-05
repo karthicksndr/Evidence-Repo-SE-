@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component }  from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class SubmitEvidence extends Component {
+    
+
     constructor(props) {
         super(props);
 
@@ -17,7 +19,7 @@ export default class SubmitEvidence extends Component {
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
-        this.state = {
+        this.state= {
             typeOfPaper: '',
             title: '',
             author: '',
@@ -97,7 +99,7 @@ export default class SubmitEvidence extends Component {
 
         console.log(evidence);
 
-        axios.post('/evidence/add', evidence)
+        axios.post('http://localhost:5000/evidence/add', evidence)
 
         window.location = '/success';
     }
@@ -179,11 +181,6 @@ export default class SubmitEvidence extends Component {
                             />
                         </div>
                     </div>
-
-
-
-
-
                     <div className="form-group">
                         <input type="submit" value="Create Evidence" className="btn btn-primary" />
                     </div>
