@@ -131,16 +131,35 @@ exports.getAllEvidences = (req, res) => {
 };
 
 exports.createEvidence = (req, res) => {
-    const evidence = new Evidence(req.body);
-    evidence.save((err, exercise) => {
-        if(err){
-            return res.status(400).json({
-                error: "Unable to save in category"
-            })
+
+    const evidence = new Evidence();
+    evidence.typeOfPaper = req.body.typeOfPaper;
+    evidence.title = req.body.title;
+    evidence.author = req.body.author;
+    evidence.source = req.body.source;
+    evidence.yearOfPublication = req.body.yearOfPublication;
+    evidence.doiLink = req.body.doiLink;
+    evidence.status = req.body.status;
+    evidence.dateOfSubmission = req.body.dateOfSubmission;
+    evidence.bibfile = req.file;
+
+    evidence.save((err, evidence) => {
+        if (err) {
+
+            try {
+                console.log(evidence)
+                return res.status(400).json({
+                    error: "Unable to save evidence"
+                })
+            } catch (error) {
+                console.log(error)
+            }
+           
         }
-        res.json(evidence);
+             res.send(evidence);
     });
 }
+
 
 exports.updateEvidence = (req, res) => {
     Evidence.findByIdAndUpdate(

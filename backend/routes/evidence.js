@@ -1,5 +1,20 @@
 const express = require("express")
 const router = express.Router();
+const multer = require('multer');
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads/")
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname )
+    }
+})
+const upload = multer({
+    storage: storage
+}).single('bibfile')
+
 
 const { getEvidenceById, 
     getEvidence, 
@@ -24,7 +39,7 @@ router.get("/", searchEvidence)
 
 // router.get("/search/:seMethod/:year", displayWithYear)
 
-router.post('/add', isSignedIn, createEvidence);
+router.post('/add', upload, createEvidence);
 
 router.put("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, updateEvidence)
 

@@ -59,6 +59,10 @@ const paperSchema= new Schema ({
     submitter: {
         type: ObjectId,
         ref: "User",
+    },
+    bibfile: {
+        data: Buffer,
+        contentType: String
     }
 },
     { timestamps: true  }
