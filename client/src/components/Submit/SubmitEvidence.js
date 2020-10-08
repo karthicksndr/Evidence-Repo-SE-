@@ -258,18 +258,8 @@ export default class SubmitEvidence extends Component {
                             />
                         </div>
                     </div>
-<<<<<<< Updated upstream:client/src/components/auth/SubmitEvidence.js
-                    <div className="form-group">
-                        <input type="submit" value="Create Evidence" className="btn btn-primary" />
-=======
-
-
-
-
-
                     <div className="form-group offset-md-3">
                         <input type="submit" value="Submit Article" className="btn btn-primary" center/>
->>>>>>> Stashed changes:client/src/components/Submit/SubmitEvidence.js
                     </div>
                     </form>
                   </div>
