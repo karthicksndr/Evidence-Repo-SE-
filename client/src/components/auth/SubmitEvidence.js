@@ -179,11 +179,6 @@ export default class SubmitEvidence extends Component {
                             />
                         </div>
                     </div>
-
-
-
-
-
                     <div className="form-group">
                         <input type="submit" value="Create Evidence" className="btn btn-primary" />
                     </div>

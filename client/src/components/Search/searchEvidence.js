@@ -25,6 +25,7 @@ const Methods = [
       },
   ];
 
+
 export default class searchEvidence extends Component {
     constructor(props) {
         super(props)
@@ -38,6 +39,7 @@ export default class searchEvidence extends Component {
         this.fetchToYear = this.fetchToYear.bind(this);
 
         this.state = {
+            selectedClaims: [],
             searchseMethod : [],
             searchclaims : [],
             selected: '',
@@ -82,23 +84,22 @@ export default class searchEvidence extends Component {
                 <td>{evidence.author}</td>
                 <td>{evidence.yearOfPublication}</td>
                 <td>{evidence.doiLink}</td>
-                {/* <td>{evidence.outcome}</td>
-                <td>{evidence.rating}</td> */}
+
             </tr>
         )));
     }
 
-    handleChangeSearch(e){
-        console.log(e)
-        this.setState({searchseMethod:e.label})
-        
+    handleChangeSearch =  async function (e) {
+        await this.setState({searchseMethod:e.value})
+        console.log(this.state.searchseMethod)
        }
       
-       handleChangeSearch1(e){
-        console.log(e)
-        this.setState({searchclaims:e.label})
-        
-       }
+    handleChangeSearch1 = async (selectedClaims) => { 
+        let values= [];
+        await selectedClaims.map( v => values.push(v.value))
+        this.setState({searchclaims: values})
+        console.log(this.state.searchclaims)
+    }
 
     fetchFromYear =  async function (e) {
         await  this.setState ({
@@ -116,7 +117,6 @@ export default class searchEvidence extends Component {
 
     handleChangeSort= async function(e){
         await this.setState({sort:e.target.value})
-       // console.log(this.state.sort)
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
         const sortType= this.state.sort;
@@ -175,8 +175,8 @@ export default class searchEvidence extends Component {
             .catch(err => console.log(err))
                 }
 
-    render()
-     {
+    render(){
+        const {selectedClaims} = this.state;
         return (
             <div className="container">
                  <div className="jumbotron">
@@ -191,33 +191,11 @@ export default class searchEvidence extends Component {
                 <br/>
                 <h5> Select Claim for selected SE Method</h5>
                 <div>
-                <Select options={Claims} onChange={this.handleChangeSearch1}/>
+                {/*<Multiselect options={Claims} onChange={this.handleChangeSearch1}/>*/}
+                <Select isMulti={true} clearable={false} closeMenuOnSelect={false} options= {Claims} onChange={this.handleChangeSearch1} />
+                {selectedClaims.map( o => <p>{o.value}</p>)}
                 </div>
                 <br/>
-                {/* <div className="year-filter"> 
-                    <label for="fromYear">From</label>&nbsp;
-                    <input
-                    type="number" 
-                    id="fromYear" 
-                    placeholder="1900"
-                    value={this.state.fromYear}
-                    onChange={this.fetchFromYear}
-                    /> &nbsp;
-                    <label for="toYear">To</label>&nbsp;
-                    <input 
-                     type="number"
-                     id="toYear" 
-                     placeholder="2020"
-                     value={this.state.toYear}
-                     onChange={this.fetchToYear}
-                     />
-                </div> */}
-                {/*<div id="slider">
-                    <output id="rangevalue">1970</output>
-                    <input className="bar" type="range" id="rangeinput" min="1970" max="2020" onChange={this.fetchFromYear} />
-                    <span className="highlight"></span>
-                    <output id="rangevalue">2020</output>
-                </div>*/}
                 <br/>
                 <button type="button" 
                 className="btn btn-primary btn-lg" 
@@ -237,7 +215,6 @@ export default class searchEvidence extends Component {
                     <option label="Publication Year (high-low)">Publication Year (high-low)</option>
                 </select>
                 </div>
-                <br/>
                 <br/>
                 <table className="table">
                     <thead className="thead-light">

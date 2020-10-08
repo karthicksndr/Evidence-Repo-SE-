@@ -17,29 +17,17 @@ exports.getEvidence = (req, res) => {
     return res.json(req.evidence)
 };
 
-// exports.filterEvidence = (req, res,next, seMethod) => {
-
-//     const regex = new RegExp(["^", seMethod, "$"].join(""), "i")
-
-//   Evidence.find({seMethod : regex }).exec((err,seMethod ) => {
-//         if( err || !seMethod)
-//         {
-//             return err=> res.status(400).json(err)
-//         }
-//         req.seMethod = seMethod;
-//         next();
-//     })
-// }
-
 exports.searchEvidence = (req, res) => {
     const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
-    const filter1 = new RegExp(["^", req.query.search1, "$"].join(""), "i");
-
+    const filter1 =  req.query.search1
+    const claim = filter1.split(',')
+    console.log(claim)
+    const claimLength = claim.length;
     const sortBy= req.query.sort
     const value= req.query.value
     
         if(sortBy == null){
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -51,7 +39,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -63,7 +51,7 @@ exports.searchEvidence = (req, res) => {
         }
     }
     else if(sortBy == "author"){ 
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).sort({author : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -75,7 +63,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).sort({author : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -87,7 +75,7 @@ exports.searchEvidence = (req, res) => {
         }
     }
     else if(sortBy == "title"){ 
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).sort({title : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -99,7 +87,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).sort({title : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -111,7 +99,7 @@ exports.searchEvidence = (req, res) => {
         }
     }
     else if(sortBy == "yearOfPublication"){ 
-        if (filter1 == null) 
+        if (claimLength == 0) 
         {    
             Evidence.find({seMethod: filter}).sort({yearOfPublication : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -123,7 +111,7 @@ exports.searchEvidence = (req, res) => {
         }
         else 
         {
-            const query = {$and : [ {seMethod: filter}, {claims: filter1}]}
+            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
             Evidence.find(query).sort({yearOfPublication : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
