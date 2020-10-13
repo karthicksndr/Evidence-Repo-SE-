@@ -61,8 +61,11 @@ const paperSchema= new Schema ({
         ref: "User",
     },
     bibfile: {
-        data: Buffer,
-        contentType: String
+        type: String
+        
+    },
+    s3_key: {
+        type:String
     }
 },
     { timestamps: true  }

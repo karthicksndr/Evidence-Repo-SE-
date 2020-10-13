@@ -1,5 +1,8 @@
 const { Label } = require('reactstrap');
 const Evidence = require('../models/evidence')
+require("dotenv").config();
+const aws = require('aws-sdk');
+
 
 exports.getEvidenceById = (req,res,next,id) => {
     Evidence.findById(id).exec((err, evidence) => {
@@ -131,34 +134,60 @@ exports.getAllEvidences = (req, res) => {
 };
 
 exports.createEvidence = (req, res) => {
+    const file = req.file;
+    const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
 
-    const evidence = new Evidence();
-    evidence.typeOfPaper = req.body.typeOfPaper;
-    evidence.title = req.body.title;
-    evidence.author = req.body.author;
-    evidence.source = req.body.source;
-    evidence.yearOfPublication = req.body.yearOfPublication;
-    evidence.doiLink = req.body.doiLink;
-    evidence.status = req.body.status;
-    evidence.dateOfSubmission = req.body.dateOfSubmission;
-    evidence.bibfile = req.file;
-
-    evidence.save((err, evidence) => {
-        if (err) {
-
-            try {
-                console.log(evidence)
-                return res.status(400).json({
-                    error: "Unable to save evidence"
-                })
-            } catch (error) {
-                console.log(error)
-            }
-           
-        }
-             res.send(evidence);
+    let s3bucket = new aws.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION
     });
-}
+
+    //Where you want to store your file
+
+    var params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: file.originalname,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+        ACL: "public-read"
+    };
+
+    s3bucket.upload(params, function (err, data) {
+        if (err) {
+            res.status(500).json({ error: true, Message: err });
+        } else {
+            res.send({ data });
+            var newEvidenceUploaded = {
+                typeOfPaper: req.body.typeOfPaper,
+                title: req.body.title,
+                author: req.body.author,
+                source: req.body.source,
+                yearOfPublication: req.body.yearOfPublication,
+                doiLink: req.body.doiLink,
+                status: req.body.status,
+                dateOfSubmission: req.body.dateOfSubmission,
+                bibfile: s3FileURL + file.originalname,
+                s3_key: params.Key
+            };
+            var evidence = new Evidence(newEvidenceUploaded);
+            evidence.save(function (err, evidence) {
+                if (err) {
+                    try {
+                        console.log(evidence)
+                        return res.status(400).json({
+                            error: "Unable to save evidence"
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
+
+                }
+                     res.send(evidence);
+            });
+        }
+    });
+};
 
 
 exports.updateEvidence = (req, res) => {

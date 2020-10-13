@@ -164,9 +164,9 @@ export default class SubmitEvidence extends Component {
                 <div className="container">
                   <form onSubmit={this.onSubmit} encType="multipart /form-data">
                     <div className="form-group col-md-6 offset-md-3">
-                        <label>Type Of Evidence: </label>
+                        <label>Type Of Article: </label>
                         <select className="form-control" name="typeOfPaper" onChange={this.onChangetypeOfPaper}>
-                            <option selected>Select Evidence Type</option>
+                            <option selected>Select Article Type</option>
                             <option value="Book">Book</option>
                             <option value="Journal">Journal</option>
                             <option value="Website">Website</option>
