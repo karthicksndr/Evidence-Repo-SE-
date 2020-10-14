@@ -1,6 +1,6 @@
 const User = require('../models/user')
 
-exports.getUserById = (req,res,next,id) => {
+const getUserById = (req,res,next,id) => {
     User.findById(id).exec((err, user) => {
         if(err || !user){
             return res.status(400).json({
@@ -12,20 +12,20 @@ exports.getUserById = (req,res,next,id) => {
     });
 }
 
-exports.getUser = (req, res) => { 
+const getUser = (req, res) => { 
     req.profile.password = undefined;
     req.profile.createdAt = undefined;
     req.profile.updatedAt= undefined;
     return res.json(req.profile)
 }
 
-exports.getAllUsers = (req, res) => {
+const getAllUsers = (req, res) => {
     User.find()
     .then( user => res.json(user))
     .catch(err=> res.status(400).json('Error: '+ err))
 } 
 
-exports.updateUser = (req, res) => {
+const updateUser = (req, res) => {
     User.findByIdAndUpdate(
         {_id : req.profile._id},
         {$set: req.body},
@@ -41,4 +41,9 @@ exports.updateUser = (req, res) => {
             res.json(user)
         });
 }
+
+module.exports.getUserById = getUserById
+module.exports.getUser = getUser
+module.exports.getAllUsers = getAllUsers
+module.exports.updateUser = updateUser
 

@@ -1,13 +1,20 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import ReactDOM from 'react-dom';
+import {
+	renderIntoDocument,
+	findRenderedDOMComponentWithClass,
+	scryRenderedComponentsWithType
+} from 'react-dom';
 import App from './App';
+
 
 // arrange: require user
 const chai = require('chai');
 const expect = chai.expect;
-const User = require('../backend/models/user');
-const Evidence = require('../backend/models/evidence');
+const User = require('../../backend/models/user');
+const Evidence = require('../../backend/models/evidence');
+const EvidenceList = require('../src/components/moderator/evidencelist');
 
 test('renders without crashing', () => {
   const div = document.createElement('div');
@@ -59,3 +66,18 @@ describe('Create valid evidence', () => {
 
   });
 });
+
+// describe('EvidenceList', () => {
+// 	it('should render a div with "evidence-list" class', () => {
+// 		const evidence = [];
+// 		const component = renderIntoDocument(
+// 			<EvidenceList
+// 				evidence={evidence}
+// 			/>
+// 		);
+// 		const evidencelistEle = findRenderedDOMComponentWithClass(component, 'evidencelist');
+
+// 		expect(evidencelistEle).to.be.ok;
+//   });
+  
+// });

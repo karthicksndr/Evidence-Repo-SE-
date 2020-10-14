@@ -11,7 +11,11 @@ import userpage from "./components/auth/userpage";
 import Success from "./components/Submit/Success";
 import Search from "./components/Search/searchEvidence";
 import Landing from "./components/home/landing";
-import Navbar from "./components/home/navbar"
+import Navbar from "./components/home/navbar";
+import Details from "./components/moderator/evidencedetails";
+import List from "./components/moderator/evidencelist";
+import Moderate from "./components/moderator/moderateevidence";
+import Updated from "./components/moderator/updatedevidence";
 
 class App extends Component {
   render() {
@@ -27,6 +31,10 @@ class App extends Component {
       <Route path="/SubmitEvidence" exact component={SubmitEvidence} />
       <Route path="/Success" exact component={Success} />
       <Route path="/search" exact component={Search} />
+      <Route path='/evidence' exact component={List} />
+      <Route path='/show-evidence/:id' exact component={Details} />
+      <Route path='/edit-evidence/:id' exact component={Moderate} />
+      <Route path='/update-evidence/:id' exact component={Updated} />
       </div>
       </Router>
     );

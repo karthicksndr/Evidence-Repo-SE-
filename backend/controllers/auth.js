@@ -1,10 +1,10 @@
 const User = require("../models/user")
 const { check, validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
+// const jwt = require('jsonwebtoken');
+// const expressJwt = require('express-jwt');
 require('dotenv').config()
 
-exports.signUp = (req, res) => {
+const signUp = (req, res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(422).json({
@@ -30,7 +30,7 @@ exports.signUp = (req, res) => {
     })
 };
 
-exports.signIn = (req, res) => {
+const signIn = (req, res) => {
     const errors = validationResult(req)
     const {email,password} = req.body;
     
@@ -52,36 +52,36 @@ exports.signIn = (req, res) => {
             })
         }
 
-        // create token using jsonwebtoken
-        const token = jwt.sign({ _id: user._id }, process.env.SECRET );
-        // put token in cookies
-        res.cookie("token", token, {expire: new Date() + 999 });
-        // send respond to front-end
+        // // create token using jsonwebtoken
+        // const token = jwt.sign({ _id: user._id }, process.env.SECRET );
+        // // put token in cookies
+        // res.cookie("token", token, {expire: new Date() + 999 });
+        // // send respond to front-end
 
-        const {_id, firstName, email, userType} = user;
-        return res.json({token, user: {_id, firstName, email, userType}})
+        // const {_id, firstName, email, userType} = user;
+        // return res.json({token, user: {_id, firstName, email, userType}})
     });
 };
 
-exports.signOut= (req,res) => {
-    res.clearCookie("token")
-    res.json({
-        message: "user signed out"
-    });
-}
+// exports.signOut= (req,res) => {
+//     res.clearCookie("token")
+//     res.json({
+//         message: "user signed out"
+//     });
+// }
 
 
 // protected routes 
 
-exports.isSignedIn = expressJwt({
-    secret: process.env.SECRET,
-    userProperty: "auth", 
-    algorithms: ['HS256']
-});
+// exports.isSignedIn = expressJwt({
+//     secret: process.env.SECRET,
+//     userProperty: "auth", 
+//     algorithms: ['HS256']
+// });
 
 // custom made middlewares
 
-exports.isAuthenticated = (req, res , next) => {
+const isAuthenticated = (req, res , next) => {
     let checker = req.profile && req.auth && req.profile._id  == req.auth._id;
     if(!checker){
         return res.status(403).json({
@@ -91,7 +91,7 @@ exports.isAuthenticated = (req, res , next) => {
     next();
 }
 
-exports.isAdmin = (req, res , next) => {
+const isAdmin = (req, res , next) => {
     if(req.profile.userType != "Admin"){
         res.status(404).json({
             error: "You are not an ADMIN"
@@ -99,3 +99,8 @@ exports.isAdmin = (req, res , next) => {
     }
     next();
 }
+
+module.exports.signUp = signUp
+module.exports.signIn = signIn
+module.exports.isAuthenticated = isAuthenticated
+module.exports.isAdmin = isAdmin

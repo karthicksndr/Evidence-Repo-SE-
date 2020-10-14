@@ -46,6 +46,9 @@ const paperSchema= new Schema ({
         type: String,
         required: true
     },
+    reject : {
+        type: String
+    },
     rating : {
         type: Number
     },
