@@ -1,1 +1,1 @@
-Software Engineering Evidence Repository - SEER Frontend
+Software Engineering Evidence Repository - SEER
