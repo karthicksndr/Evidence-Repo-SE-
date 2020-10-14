@@ -1,20 +1,15 @@
 const express = require("express")
 const router = express.Router();
-<<<<<<< HEAD
 const multer = require('multer');
-
 
 const storage = multer.memoryStorage();
 const upload = multer({
     storage: storage
 }).single('bibfile');
 
-
-=======
 const Evidence = require('../models/evidence')
 // const routes = require('../controllers/evidence')
  
->>>>>>> develop
 const { getEvidenceById, 
     getEvidence, 
     createEvidence ,
@@ -47,11 +42,9 @@ router.get("/", searchEvidence)
 
 // router.put("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, updateEvidence)
 
-<<<<<<< HEAD
 router.post('/add', upload, createEvidence);
-=======
+
 router.put("/:evidenceId/:userId", updateEvidence)
->>>>>>> develop
 
 // router.delete("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, removeEvidence)
 

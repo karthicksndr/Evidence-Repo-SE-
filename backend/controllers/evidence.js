@@ -127,8 +127,7 @@ const getAllEvidences = (req, res) => {
     .catch(err=> res.status(400).json(err))
 };
 
-<<<<<<< HEAD
-exports.createEvidence = (req, res) => {
+const createEvidence = (req, res) => {
     const file = req.file;
     const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
 
@@ -180,25 +179,15 @@ exports.createEvidence = (req, res) => {
                 }
                      res.send(evidence);
             });
-=======
+        }
+    })
+}
+
 const getPendEvidences = (req, res) => {
     Evidence.find({status: "Pending Review"})
     .then( evidence=> res.json(evidence))
     .catch(err => res.status(404).json({ message: 'No Evidence found' }));
 };
-
-const createEvidence = (req, res) => {
-    const evidence = new Evidence(req.body);
-    evidence.save((err, exercise) => {
-        if(err){
-            return res.status(400).json({
-                error: "Unable to save in category"
-            })
->>>>>>> develop
-        }
-    });
-};
-
 
 const updateEvidence = (req, res) => {
     Evidence.findByIdAndUpdate(

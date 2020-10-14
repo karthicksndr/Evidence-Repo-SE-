@@ -159,7 +159,7 @@ export default class SubmitEvidence extends Component {
                     </h2>
                 </div>
                 <div class=  "p-3 mb-2 bg-dark text-white">
-                  \<h3><center>Submit an Article</center> </h3>
+                  <h3><center>Submit an Article</center> </h3>
                 </div>
                 <div className="container">
                   <form onSubmit={this.onSubmit} encType="multipart /form-data">

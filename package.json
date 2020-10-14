@@ -11,7 +11,6 @@
     "client": "cd client && npm start",
     "dev": "concurrently -n 'server,client' -c 'red,green'  \"cd backend && node server.js\" \"npm run client\"",
     "test": "mocha 'backend/test/*.js' --timeout 9999999"
-   
   },
   "engines": {
     "node": "12.x"
@@ -21,10 +20,7 @@
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
-<<<<<<< HEAD
-=======
     "chai-http": "^4.3.0",
->>>>>>> develop
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -42,12 +38,8 @@
     "react-datepicker": "^3.3.0",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.0",
-<<<<<<< HEAD
     "react-scripts": "^3.4.3",
-    "reactstrap": "^8.6.0"
-=======
     "reactstrap": "^8.6.0",
     "should": "^13.2.3"
->>>>>>> develop
   }
 }
