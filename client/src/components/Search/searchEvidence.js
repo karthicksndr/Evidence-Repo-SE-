@@ -126,25 +126,35 @@ export default class searchEvidence extends Component {
             var value= 1
         }
         else if(sortType === "Author (Z-A)"){
+            // eslint-disable-next-line
             var sortBy= "author";
+            // eslint-disable-next-line
             var value= -1
         }
         else if(sortType === "Title (A-Z)")
         {
+            // eslint-disable-next-line
             var sortBy= "title";
+            // eslint-disable-next-line
             var value= 1
         }
         else if(sortType === "Title (Z-A)")
         {
+            // eslint-disable-next-line
             var sortBy= "title";
+            // eslint-disable-next-line
             var value= -1
         }
         else if(sortType === "Publication Year (low-high)"){
+            // eslint-disable-next-line
             var sortBy = "yearOfPublication";
+            // eslint-disable-next-line
             var value= 1
         }
         else if(sortType === "Publication Year (high-low)"){
+            // eslint-disable-next-line
             var sortBy = "yearOfPublication";
+            // eslint-disable-next-line
             var value= -1
         }
 

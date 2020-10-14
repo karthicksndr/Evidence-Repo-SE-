@@ -4,23 +4,17 @@ require("dotenv").config();
 const aws = require('aws-sdk');
 
 
-exports.getEvidenceById = (req,res,next,id) => {
-    Evidence.findById(id).exec((err, evidence) => {
-        if(err || !evidence){
-            return res.status(400).json({
-                error: "No user found in DB"
-            })
-        }
-        req.evidence= evidence;
-        next();
-    });
-}
+const getEvidenceById = (req,res) => {
+    Evidence.findById(req.params.id)
+    .then(evidence => res.json(evidence))
+    .catch(err => res.status(404).json({ nobookfound: 'No Book found' }));
+};
 
-exports.getEvidence = (req, res) => {
+const getEvidence = (req, res) => {
     return res.json(req.evidence)
 };
 
-exports.searchEvidence = (req, res) => {
+const searchEvidence = (req, res) => {
     const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
     const filter1 =  req.query.search1
     const claim = filter1.split(',')
@@ -127,12 +121,13 @@ exports.searchEvidence = (req, res) => {
     }
 }
 
-exports.getAllEvidences = (req, res) => {
+const getAllEvidences = (req, res) => {
     Evidence.find({status: "Accepted"})
     .then( evidence=> res.json(evidence))
     .catch(err=> res.status(400).json(err))
 };
 
+<<<<<<< HEAD
 exports.createEvidence = (req, res) => {
     const file = req.file;
     const s3FileURL = process.env.AWS_Uploaded_File_URL_LINK;
@@ -185,12 +180,27 @@ exports.createEvidence = (req, res) => {
                 }
                      res.send(evidence);
             });
+=======
+const getPendEvidences = (req, res) => {
+    Evidence.find({status: "Pending Review"})
+    .then( evidence=> res.json(evidence))
+    .catch(err => res.status(404).json({ message: 'No Evidence found' }));
+};
+
+const createEvidence = (req, res) => {
+    const evidence = new Evidence(req.body);
+    evidence.save((err, exercise) => {
+        if(err){
+            return res.status(400).json({
+                error: "Unable to save in category"
+            })
+>>>>>>> develop
         }
     });
 };
 
 
-exports.updateEvidence = (req, res) => {
+const updateEvidence = (req, res) => {
     Evidence.findByIdAndUpdate(
         {_id : req.evidence._id},
         {$set: req.body},
@@ -207,7 +217,7 @@ exports.updateEvidence = (req, res) => {
         });
 }
 
-exports.removeEvidence = (req, res) => {
+const removeEvidence = (req, res) => {
     const evidence = req.evidence;
 
     evidence.remove((err, evidence) => {
@@ -217,7 +227,16 @@ exports.removeEvidence = (req, res) => {
             })
         }
         res.json({
-            message: `Successfully deleted evidence - ${evidence.title}`
+            msg: 'Updated successfully'
         });
     });
 };
+
+module.exports.getEvidenceById = getEvidenceById
+module.exports.getEvidence = getEvidence
+module.exports.searchEvidence = searchEvidence
+module.exports.getAllEvidences = getAllEvidences
+module.exports.getPendEvidences = getPendEvidences
+module.exports.createEvidence = createEvidence
+module.exports.updateEvidence = updateEvidence
+module.exports.removeEvidence = removeEvidence
