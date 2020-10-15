@@ -23,7 +23,7 @@ before(function (done) {
 });
 /*
   * Test the /POST route
-  */
+  
  describe('/POST Evidence', () => {
     it('it should POST a article ', (done) => {
         let evidence = {
@@ -55,6 +55,7 @@ before(function (done) {
     });
 
 });
+*/
 
 describe('/GET all evidences', () => {
   it('it should GET all the articles', (done) => {
