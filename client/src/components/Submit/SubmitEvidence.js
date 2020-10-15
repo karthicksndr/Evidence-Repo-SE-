@@ -127,7 +127,7 @@ export default class SubmitEvidence extends Component {
         formData.append('source', this.state.source);
         formData.append('yearOfPublication', this.state.yearOfPublication);
         formData.append('doiLink', this.state.doiLink);
-        formData.append('status', "Submitted");
+        formData.append('status', "Pending Review");
         formData.append('dateOfSubmission', this.state.dateOfSubmission);
         formData.append('bibfile', this.state.selectedFile);
             
