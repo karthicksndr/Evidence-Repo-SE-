@@ -22,6 +22,9 @@ export default class Navbar extends Component {
           <li className="navbar-item">
           <Link to="/evidence" className="nav-link">Moderate</Link>
           </li>
+          <li className="navbar-item">
+          <Link to="/analyst" className="nav-link">Analyst</Link>
+          </li>
         </ul>
         </div>
       </nav>

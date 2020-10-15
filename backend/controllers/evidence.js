@@ -18,13 +18,14 @@ const searchEvidence = (req, res) => {
     const filter= new RegExp(["^", req.query.search, "$"].join(""), "i")
     const filter1 =  req.query.search1
     const claim = filter1.split(',')
-    console.log(claim)
+       
     const claimLength = claim.length;
     const sortBy= req.query.sort
+    // console.log(sortBy)
     const value= req.query.value
     
         if(sortBy == null){
-        if (claimLength == 0) 
+        if (filter1 == 0) 
         {    
             Evidence.find({seMethod: filter}).exec((err,seMethod ) => {
                 if( err || !seMethod)
@@ -47,10 +48,10 @@ const searchEvidence = (req, res) => {
             })
         }
     }
-    else if(sortBy == "author"){ 
-        if (claimLength == 0) 
+    else { 
+        if (filter1 == 0) 
         {    
-            Evidence.find({seMethod: filter}).sort({author : value}).exec((err,seMethod ) => {
+            Evidence.find({seMethod: filter}).sort({[sortBy] : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
                 {
                     return err=> res.status(400).json(err)
@@ -62,55 +63,7 @@ const searchEvidence = (req, res) => {
         {
             const query = {$and : [ {seMethod: filter}, {claims: claim}]}
         
-            Evidence.find(query).sort({author : value}).exec((err,seMethod ) => {
-                if( err || !seMethod)
-                {
-                    return err=> res.status(400).json(err)
-                }
-                res.json(seMethod)  
-            })
-        }
-    }
-    else if(sortBy == "title"){ 
-        if (claimLength == 0) 
-        {    
-            Evidence.find({seMethod: filter}).sort({title : value}).exec((err,seMethod ) => {
-                if( err || !seMethod)
-                {
-                    return err=> res.status(400).json(err)
-                }
-                res.json(seMethod)  
-            })
-        }
-        else 
-        {
-            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
-        
-            Evidence.find(query).sort({title : value}).exec((err,seMethod ) => {
-                if( err || !seMethod)
-                {
-                    return err=> res.status(400).json(err)
-                }
-                res.json(seMethod)  
-            })
-        }
-    }
-    else if(sortBy == "yearOfPublication"){ 
-        if (claimLength == 0) 
-        {    
-            Evidence.find({seMethod: filter}).sort({yearOfPublication : value}).exec((err,seMethod ) => {
-                if( err || !seMethod)
-                {
-                    return err=> res.status(400).json(err)
-                }
-                res.json(seMethod)  
-            })
-        }
-        else 
-        {
-            const query = {$and : [ {seMethod: filter}, {claims: claim}]}
-        
-            Evidence.find(query).sort({yearOfPublication : value}).exec((err,seMethod ) => {
+            Evidence.find(query).sort({[sortBy] : value}).exec((err,seMethod ) => {
                 if( err || !seMethod)
                 {
                     return err=> res.status(400).json(err)
@@ -123,6 +76,12 @@ const searchEvidence = (req, res) => {
 
 const getAllEvidences = (req, res) => {
     Evidence.find({status: "Accepted"})
+    .then( evidence=> res.json(evidence))
+    .catch(err=> res.status(400).json(err))
+};
+
+const getAnalaysEvidence = (req, res) => {
+    Evidence.find({status: "Approved"})
     .then( evidence=> res.json(evidence))
     .catch(err=> res.status(400).json(err))
 };
@@ -229,3 +188,4 @@ module.exports.getPendEvidences = getPendEvidences
 module.exports.createEvidence = createEvidence
 module.exports.updateEvidence = updateEvidence
 module.exports.removeEvidence = removeEvidence
+module.exports.getAnalaysEvidence = getAnalaysEvidence

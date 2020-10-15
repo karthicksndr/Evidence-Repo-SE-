@@ -16,6 +16,8 @@ import Details from "./components/moderator/evidencedetails";
 import List from "./components/moderator/evidencelist";
 import Moderate from "./components/moderator/moderateevidence";
 import Updated from "./components/moderator/updatedevidence";
+import EditEvidence from "./components/Analyst/analystAction"
+import Analyst from "./components/Analyst/analystView"
 
 class App extends Component {
   render() {
@@ -35,6 +37,8 @@ class App extends Component {
       <Route path='/show-evidence/:id' exact component={Details} />
       <Route path='/edit-evidence/:id' exact component={Moderate} />
       <Route path='/update-evidence/:id' exact component={Updated} />
+      <Route path="/evidence/:id" exact component= {EditEvidence}/>
+      <Route path="/analyst" exact component= {Analyst}/>
       </div>
       </Router>
     );

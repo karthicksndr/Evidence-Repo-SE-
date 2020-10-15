@@ -22,8 +22,7 @@ defaultDisplay()  {
             evidence : response.data
         })
     })
-    .catch(err => console.log(err))
-    
+    .catch(err => console.log(err)) 
 }
 
 render() {

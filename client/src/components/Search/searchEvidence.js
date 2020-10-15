@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Select from 'react-select';
-import './searchEvidence.css'
 
 const Methods = [
     {
@@ -25,7 +24,6 @@ const Methods = [
       },
   ];
 
-
 export default class searchEvidence extends Component {
     constructor(props) {
         super(props)
@@ -34,9 +32,14 @@ export default class searchEvidence extends Component {
         this.handleChangeSearch= this.handleChangeSearch.bind(this);
         this.handleChangeSearch1= this.handleChangeSearch1.bind(this);
         this.onSubmitSearch= this.onSubmitSearch.bind(this);
-        this.handleChangeSort= this.handleChangeSort.bind(this);
-        this.fetchFromYear= this.fetchFromYear.bind(this);
-        this.fetchToYear = this.fetchToYear.bind(this);
+        this.onSortSeMethod= this.onSortSeMethod.bind(this)
+        this.onSortClaims= this.onSortClaims.bind(this)
+        this.onSortDegreeOfEvid= this.onSortDegreeOfEvid.bind(this)
+        this.onSortType= this.onSortType.bind(this)
+        this.onSortSource= this.onSortSource.bind(this)
+        this.onSortTitle= this.onSortTitle.bind(this)
+        this.onSortPublishedYear= this.onSortPublishedYear.bind(this)
+        this.onSortAuthor= this.onSortAuthor.bind(this)
 
         this.state = {
             selectedClaims: [],
@@ -46,7 +49,15 @@ export default class searchEvidence extends Component {
             evidence: [],
             sort: [],
             fromYear: '',
-            toYear: ''
+            toYear: '',
+            seMethodTitle: 'SE Method',
+            claimsTitle: 'Claims',
+            degOfEvidTitle: 'Degree Of Evidence',
+            typeTitle: 'Type',
+            sourceTitle: 'Source',
+            titleTitle: 'Title',
+            authorTitle: 'Author',
+            pubYearTitle: 'Published Year'
         }
     };
     componentDidMount() {
@@ -77,14 +88,13 @@ export default class searchEvidence extends Component {
             <tr key={index}>
                 <td>{evidence.seMethod}</td>
                 <td>{evidence.claims}</td>
-                <td>{evidence.degreeofevidence}</td>
                 <td>{evidence.typeOfPaper}</td>
                 <td>{evidence.source}</td>
-                <td>{evidence.title}</td>
+                <td>
+                <a a href={"https://doi.org/"+ evidence.doiLink} target="_blank" rel="noopener noreferrer"> {evidence.title} </a> </td>
                 <td>{evidence.author}</td>
                 <td>{evidence.yearOfPublication}</td>
-                <td>{evidence.doiLink}</td>
-
+                <td>{evidence.degreeofevidence}</td>
             </tr>
         )));
     }
@@ -101,81 +111,468 @@ export default class searchEvidence extends Component {
         console.log(this.state.searchclaims)
     }
 
-    fetchFromYear =  async function (e) {
-        await  this.setState ({
-            fromYear: e.target.value
-        })
-     console.log(this.state.fromYear)
-    }
+    onSortSeMethod = async function(e) {
 
-    fetchToYear =  async function (e) {
-        await  this.setState ({
-            toYear: e.target.value
-        })
-     console.log(this.state.toYear)
-    }
-
-    handleChangeSort= async function(e){
-        await this.setState({sort:e.target.value})
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
-        const sortType= this.state.sort;
 
-        if(sortType === "Author (A-Z)"){
-            var sortBy= "author";
-            var value= 1
-        }
-        else if(sortType === "Author (Z-A)"){
-            // eslint-disable-next-line
-            var sortBy= "author";
-            // eslint-disable-next-line
-            var value= -1
-        }
-        else if(sortType === "Title (A-Z)")
-        {
-            // eslint-disable-next-line
-            var sortBy= "title";
-            // eslint-disable-next-line
-            var value= 1
-        }
-        else if(sortType === "Title (Z-A)")
-        {
-            // eslint-disable-next-line
-            var sortBy= "title";
-            // eslint-disable-next-line
-            var value= -1
-        }
-        else if(sortType === "Publication Year (low-high)"){
-            // eslint-disable-next-line
-            var sortBy = "yearOfPublication";
-            // eslint-disable-next-line
-            var value= 1
-        }
-        else if(sortType === "Publication Year (high-low)"){
-            // eslint-disable-next-line
-            var sortBy = "yearOfPublication";
-            // eslint-disable-next-line
-            var value= -1
-        }
+        var order= e.target.title;
+        if(order === "desc"){
 
-        console.log(sortBy)
+            e.target.title= "asc"
+            const sortBy= 'seMethod';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+                .then(response => {
+                        this.setState ({
+                            evidence : response.data
+                        })
+                        console.log(response.data)
+                    })
+                    .catch(err => console.log(err))
+            this.setState({
+                seMethod: 'SE Method ▲',
+                claimsTitle: 'Claims',
+                degOfEvidTitle: 'Degree Of Evidence',
+                typeTitle: 'Type',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })    
+            }
+        else{
+            e.target.title= "desc"
+        }
+        console.log(order)
+        const sortBy= 'seMethod';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+                .then(response => {
+                        this.setState ({
+                            evidence : response.data
+                        })
+                        console.log(response.data)
+                    })
+                    .catch(err => console.log(err))
+            this.setState({
+                seMethodTitle: 'SE Method ▼',
+                claimsTitle: 'Claims',
+                degOfEvidTitle: 'Degree Of Evidence',
+                typeTitle: 'Type',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            }) 
+            }
 
-        axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
-        .then(response => {
+    onSortClaims = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'claims';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+                .then(response => {
+                        this.setState ({
+                            evidence : response.data
+                        })
+                        console.log(response.data)
+                    })
+                    .catch(err => console.log(err))
+        this.setState({
+                claimsTitle: 'Claims ▲',
+                seMethodTitle: 'SE Method',
+                degOfEvidTitle: 'Degree Of Evidence',
+                typeTitle: 'Type',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })
+            }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'claims';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                claimsTitle: 'Claims ▼',
+                seMethodTitle: 'SE Method',
+                degOfEvidTitle: 'Degree Of Evidence',
+                typeTitle: 'Type',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })
+        }
+        console.log(order)
+    }
+
+    onSortDegreeOfEvid = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'degreeofevidence';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                        this.setState ({
+                            evidence : response.data
+                        })
+                        console.log(response.data)
+                    })
+            .catch(err => console.log(err))
+            this.setState({
+                degOfEvidTitle: 'Degree of Evidence ▲',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                typeTitle: 'Type',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            }) 
+            }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'degreeofevidence';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                degOfEvidTitle: 'Degree of Evidence ▼',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                typeTitle: 'Type',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            }) 
+        }
+        console.log(order)
+    }
+
+    onSortType = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'typeOfPaper';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                typeTitle: 'Type ▲',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            }) 
+            }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'typeOfPaper';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                typeTitle: 'Type ▼',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                sourceTitle: 'Source',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            }) 
+        }
+        console.log(order)
+    }
+
+    onSortSource = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'source';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                sourceTitle: 'Source ▲',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })
+            }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'source';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
                 this.setState ({
                     evidence : response.data
                 })
                 console.log(response.data)
             })
             .catch(err => console.log(err))
-       }
+            this.setState({
+                sourceTitle: 'Source ▼',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                titleTitle: 'Title',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })
+        }
+        console.log(order)
+    }
 
-    onSubmitSearch(e) {
+    onSortTitle = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'title';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+                .then(response => {
+                        this.setState ({
+                            evidence : response.data
+                        })
+                        console.log(response.data)
+                    })
+                    .catch(err => console.log(err))
+            this.setState({
+                titleTitle: 'Title ▲',
+                sourceTitle: 'Source',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })
+                }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'title';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+                .then(response => {
+                        this.setState ({
+                            evidence : response.data
+                        })
+                        console.log(response.data)
+                    })
+                    .catch(err => console.log(err))
+            this.setState({
+                titleTitle: 'Title ▼',
+                sourceTitle: 'Source',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                authorTitle: 'Author',
+                pubYearTitle: 'Published Year'
+            })
+        }
+        console.log(order)
+    }
+
+    onSortAuthor = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'author';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                authorTitle: 'Author ▲',
+                titleTitle: 'Title',
+                sourceTitle: 'Source',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                pubYearTitle: 'Published Year'
+            })
+            }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'author';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+            this.setState ({
+                evidence : response.data
+            })
+            console.log(response.data)
+            })
+            .catch(err => console.log(err))
+            this.setState({
+                authorTitle: 'Author ▼',
+                titleTitle: 'Title',
+                sourceTitle: 'Source',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method',
+                pubYearTitle: 'Published Year'
+            })
+        }
+        console.log(order)
+    }
+
+    onSortPublishedYear = async function(e) {
+        const searchseMethod= this.state.searchseMethod;
+        const searchclaims= this.state.searchclaims;
+
+        var order= e.target.title;
+        if(order === "desc"){
+
+            e.target.title= "asc";
+
+            const sortBy= 'yearOfPublication';
+            const value = 1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                    this.setState ({
+                        evidence : response.data
+                    })
+                    console.log(response.data)
+                })
+            .catch(err => console.log(err))
+            this.setState({
+                pubYearTitle: 'Published Year ▲',
+                authorTitle: 'Author',
+                titleTitle: 'Title',
+                sourceTitle: 'Source',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method'
+            })
+            }
+        else{
+            e.target.title= "desc"
+
+            const sortBy= 'yearOfPublication';
+            const value = -1;
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            .then(response => {
+                this.setState ({
+                    evidence : response.data
+                })
+                console.log(response.data)
+            })
+            .catch(err => console.log(err))
+            this.setState({
+                pubYearTitle: 'Published Year ▼',
+                authorTitle: 'Author',
+                titleTitle: 'Title',
+                sourceTitle: 'Source',
+                typeTitle: 'Type',
+                degOfEvidTitle: 'Degree of Evidence',
+                claimsTitle: 'Claims',
+                seMethodTitle: 'SE Method'
+            })
+        }
+        console.log(order)
+    }
+
+    onSubmitSearch = async function(e){
         e.preventDefault();
         
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
-        axios.get("evidence/?search="+searchseMethod+"&search1="+searchclaims)
+        if(searchclaims.length >= 1){
+        await axios.get("evidence/?search="+searchseMethod+"&search1="+searchclaims)
         .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -183,13 +580,18 @@ export default class searchEvidence extends Component {
                 console.log(response.data)
             })
             .catch(err => console.log(err))
-                }
+        }
+        else{
+            window.alert('Please select at least one claim to see the filtered search results')
+        }
+    }
 
     render(){
         const {selectedClaims} = this.state;
+
         return (
             <div className="container">
-                 <div className="jumbotron">
+                <div className="jumbotron">
               <h2>
               <b>Software Engineering Evidence Repository - SEER{" "}</b>
               </h2>
@@ -214,30 +616,18 @@ export default class searchEvidence extends Component {
                 >Search</button>
                 <br/>
                 &nbsp;
-                <div className="sort">
-                <select onChange={this.handleChangeSort}>
-                    <option label="Sort By" disabled selected>Sort By</option>
-                    <option label="Author (A-Z)">Author (A-Z)</option>
-                    <option label="Author (Z-A)">Author (Z-A)</option>
-                    <option label="Title (A-Z)">Title (A-Z)</option>
-                    <option label="Title (Z-A)">Title (Z-A)</option>
-                    <option label="Publication Year (low-high)">Publication Year (low-high)</option>
-                    <option label="Publication Year (high-low)">Publication Year (high-low)</option>
-                </select>
-                </div>
                 <br/>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
-                            <th>SE Method</th>
-                            <th>Claims</th>
-                            <th>Degree of Evidence</th>
-                            <th>Type</th>
-                            <th>Source</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Published Year</th>
-                            <th>DOI</th>
+                            <th onClick={this.onSortSeMethod} title="desc"> {this.state.seMethodTitle}</th>
+                            <th onClick={this.onSortClaims} title="desc">{this.state.claimsTitle}</th>
+                            <th onClick={this.onSortType} title="desc">{this.state.typeTitle}</th>
+                            <th onClick={this.onSortSource} title="desc">{this.state.sourceTitle}</th>
+                            <th onClick={this.onSortTitle} title="desc">{this.state.titleTitle}</th>
+                            <th onClick={this.onSortAuthor} title="desc">{this.state.authorTitle}</th>
+                            <th onClick={this.onSortPublishedYear} title="desc">{this.state.pubYearTitle}</th>
+                            <th onClick={this.onSortDegreeOfEvid} title="desc">{this.state.degOfEvidTitle}</th>
                             {/* <th>Outcome</th>
                             <th>Rating</th> */}
                         </tr>

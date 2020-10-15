@@ -8,7 +8,9 @@ const upload = multer({
 }).single('bibfile');
 
 const Evidence = require('../models/evidence')
+
 // const routes = require('../controllers/evidence')
+// const {isSignedIn,isAdmin,isAuthenticated} = require('../controllers/auth')
  
 const { getEvidenceById, 
     getEvidence, 
@@ -18,41 +20,32 @@ const { getEvidenceById,
     getAllEvidences,
     getPendEvidences,
     searchEvidence,
+    getAnalaysEvidence
 
      } = require('../controllers/evidence')
-// const {isSignedIn,isAdmin,isAuthenticated} = require('../controllers/auth')
+
 const {getUserById} = require('../controllers/user')
 
 router.param("evidenceId" ,getEvidenceById);
 router.param("userId" ,getUserById);
-// // router.param("seMethod", filterEvidence)
-// // router.param("year", filterBasedOnYear)
-
-// router.get("/:evidenceId", isSignedIn, getEvidence);
 
 router.get("/:evidenceId", getEvidence);
 
 router.get("/", searchEvidence)
 
-// // router.get("/search/:seMethod/:year", displayWithYear)
-
-// router.post('/add', isSignedIn, createEvidence);
-
- router.post('/add', createEvidence);
-
-// router.put("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, updateEvidence)
+router.post('/add', createEvidence);
 
 router.post('/add', upload, createEvidence);
 
 router.put("/:evidenceId/:userId", updateEvidence)
-
-// router.delete("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, removeEvidence)
 
 router.delete("/:evidenceId", removeEvidence)
 
 router.get("/evidences/all", getAllEvidences)
 
 router.get("/evidences/pending", getPendEvidences)
+
+router.get("/evidences/analyst", getAnalaysEvidence)
 
 router.get('/update/:id', (req, res) => {
   Evidence.findById(req.params.id)
@@ -75,3 +68,14 @@ router.put('/:id', (req, res) => {
   });
 
 module.exports= router;
+
+
+
+// router.param("seMethod", filterEvidence)
+// router.param("year", filterBasedOnYear)
+// router.get("/:evidenceId", isSignedIn, getEvidence);
+// router.get("/search/:seMethod/:year", displayWithYear)
+
+// router.post('/add', isSignedIn, createEvidence);
+// router.put("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, updateEvidence)
+// router.delete("/:evidenceId/:userId", isSignedIn, isAuthenticated, isAdmin, removeEvidence)
