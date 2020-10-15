@@ -33,8 +33,6 @@ router.get("/:evidenceId", getEvidence);
 
 router.get("/", searchEvidence)
 
-router.post('/add', createEvidence);
-
 router.post('/add', upload, createEvidence);
 
 router.put("/:evidenceId/:userId", updateEvidence)
