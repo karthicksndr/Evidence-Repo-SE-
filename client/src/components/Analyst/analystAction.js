@@ -83,7 +83,12 @@ export default class SubmitEvidence extends Component {
         }
         else{
             axios.put('/evidence/'+ this.props.match.params.id, evidence)
-            window.location = 'https://tranquil-brushlands-38979.herokuapp.com/analyst';
+            .then(res => {
+                this.props.history.push('/accepted');
+              })
+              .catch(err => {
+                console.log("Evidence not accepted!" + err);
+              })
         }
     }
 
