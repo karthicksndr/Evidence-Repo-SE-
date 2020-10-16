@@ -127,7 +127,7 @@ export default class SubmitEvidence extends Component {
         formData.append('source', this.state.source);
         formData.append('yearOfPublication', this.state.yearOfPublication);
         formData.append('doiLink', this.state.doiLink);
-        formData.append('status', "Submitted");
+        formData.append('status', "Pending Review");
         formData.append('dateOfSubmission', this.state.dateOfSubmission);
         formData.append('bibfile', this.state.selectedFile);
             
@@ -158,7 +158,7 @@ export default class SubmitEvidence extends Component {
                         <b><center>Software Engineering Evidence Repository - SEER{" "}</center></b>
                     </h2>
                 </div>
-                <div class=  "p-3 mb-2 bg-dark text-white">
+                <div className=  "p-3 mb-2 bg-dark text-white">
                   <h3><center>Submit an Article</center> </h3>
                 </div>
                 <div className="container">
@@ -166,7 +166,7 @@ export default class SubmitEvidence extends Component {
                     <div className="form-group col-md-6 offset-md-3">
                         <label>Type Of Article: </label>
                         <select className="form-control" name="typeOfPaper" onChange={this.onChangetypeOfPaper}>
-                            <option selected>Select Article Type</option>
+                            <option>Select Article Type</option>
                             <option value="Book">Book</option>
                             <option value="Journal">Journal</option>
                             <option value="Website">Website</option>
@@ -259,7 +259,7 @@ export default class SubmitEvidence extends Component {
                         </div>
                     </div>
                     <div className="form-group offset-md-3">
-                        <input type="submit" value="Submit Article" className="btn btn-primary" center/>
+                        <input type="submit" value="Submit Article" className="btn btn-primary"/>
                     </div>
                     </form>
                   </div>
