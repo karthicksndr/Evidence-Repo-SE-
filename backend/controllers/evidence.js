@@ -99,7 +99,7 @@ const createEvidence = (req, res) => {
     if (err) {
       res.status(500).json({error: true, Message: err});
     } else {
-      res.send({data});
+      
       const newEvidenceUploaded = {
         typeOfPaper: req.body.typeOfPaper,
         title: req.body.title,
