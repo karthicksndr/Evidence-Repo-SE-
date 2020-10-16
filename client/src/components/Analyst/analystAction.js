@@ -1,6 +1,5 @@
 import React, { Component }  from 'react';
 import axios from 'axios';
-import Toast from 'react-bootstrap/Toast'
 
 export default class SubmitEvidence extends Component {
     constructor(props) {
@@ -83,7 +82,12 @@ export default class SubmitEvidence extends Component {
         }
         else{
             axios.put('/evidence/'+ this.props.match.params.id, evidence)
-            window.location = '/analyst';
+            .then(res => {
+                this.props.history.push('/accepted');
+              })
+              .catch(err => {
+                console.log("Evidence not accepted!" + err);
+              })
         }
     }
 
