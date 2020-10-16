@@ -83,7 +83,7 @@ export default class SubmitEvidence extends Component {
         }
         else{
             axios.put('/evidence/'+ this.props.match.params.id, evidence)
-            window.location = '/analyst';
+            window.location = 'https://tranquil-brushlands-38979.herokuapp.com/analyst';
         }
     }
 
