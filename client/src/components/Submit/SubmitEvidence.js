@@ -143,7 +143,7 @@ export default class SubmitEvidence extends Component {
             data:formData
         }).then(() => {
             console.log("Successfully submitted")
-            window.location = '/success';
+//             window.location = '/success';
         })
         
 
