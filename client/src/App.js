@@ -32,7 +32,7 @@ class App extends Component {
       <Route path="/loginscreen" exact component={Loginscreen} />
       <Route path="/userpage" exact component={userpage} />
       <Route path="/SubmitEvidence" exact component={SubmitEvidence} />
-      <Route path="/Success" exact component={Success} />
+      <Route path="/success" exact component={Success} />
       <Route path="/search" exact component={Search} />
       <Route path='/evidence' exact component={List} />
       <Route path='/show-evidence/:id' exact component={Details} />
@@ -41,7 +41,6 @@ class App extends Component {
       <Route path="/evidence/:id" exact component= {EditEvidence}/>
       <Route path="/analyst" exact component= {Analyst}/>
       <Route path="/accepted" exact component={AnalystSuccess}/>
-
       </div>
       </Router>
     );
