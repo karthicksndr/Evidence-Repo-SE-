@@ -141,9 +141,9 @@ export default class SubmitEvidence extends Component {
                 'content-type': 'multipart/form-data'
             },
             data:formData
-        }).then(() => {
+        }).then(res => {
             console.log("Successfully submitted")
-//             window.location = '/success';
+            this.props.history.push('/success');
         })
         
 
