@@ -1,4 +1,5 @@
+--- 
+install: "travis_wait npm install"
 language: node_js
-node_js:
+node_js: 
   - 12
- install: travis_wait npm install
