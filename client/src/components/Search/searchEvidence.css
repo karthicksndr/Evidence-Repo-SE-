@@ -1,12 +1,3 @@
-.sort select{
-    width: 20%; 
-    position: relative;
-    border-radius: 0;
-    height: 30px;
-    background: transparent;
-    border-color: white;
-    float:right;
-
+.clear-year-btn{
+    float: right;
 }
-
-

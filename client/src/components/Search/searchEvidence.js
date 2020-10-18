@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Select from 'react-select';
+import './searchEvidence.css'
 
 const Methods = [
     {
@@ -40,6 +41,13 @@ export default class searchEvidence extends Component {
         this.onSortTitle= this.onSortTitle.bind(this)
         this.onSortPublishedYear= this.onSortPublishedYear.bind(this)
         this.onSortAuthor= this.onSortAuthor.bind(this)
+        this.onChangeMinYear= this.onChangeMinYear.bind(this)
+        this.onChangeMaxYear= this.onChangeMaxYear.bind(this)
+        this.onFind5Years = this.onFind5Years.bind(this)
+        this.onFind10Years = this.onFind10Years.bind(this)
+        this.customYearFilter = this.customYearFilter.bind(this)
+        this.showFilterOptions = this.showFilterOptions.bind(this)
+        this.clearYearFilter = this.clearYearFilter.bind(this)
 
         this.state = {
             selectedClaims: [],
@@ -57,7 +65,11 @@ export default class searchEvidence extends Component {
             sourceTitle: 'Source',
             titleTitle: 'Title',
             authorTitle: 'Author',
-            pubYearTitle: 'Published Year'
+            pubYearTitle: 'Published Year',
+            minYearValue: 1990,
+            maxYearValue: 2020,
+            yearFilter: '', 
+            addYearFilter : false
         }
     };
     componentDidMount() {
@@ -118,11 +130,12 @@ export default class searchEvidence extends Component {
 
         var order= e.target.title;
         if(order === "desc"){
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             e.target.title= "asc"
             const sortBy= 'seMethod';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
                 .then(response => {
                         this.setState ({
                             evidence : response.data
@@ -142,12 +155,13 @@ export default class searchEvidence extends Component {
             })    
             }
         else{
-            e.target.title= "desc"
-        }
+        e.target.title= "desc"
+        const minYear = this.state.minYearValue
+        const maxYear= this.state.maxYearValue
         console.log(order)
         const sortBy= 'seMethod';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
                 .then(response => {
                         this.setState ({
                             evidence : response.data
@@ -166,6 +180,7 @@ export default class searchEvidence extends Component {
                 pubYearTitle: 'Published Year'
             }) 
             }
+        }
 
     onSortClaims = async function(e) {
         const searchseMethod= this.state.searchseMethod;
@@ -175,10 +190,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'claims';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
                 .then(response => {
                         this.setState ({
                             evidence : response.data
@@ -199,10 +215,11 @@ export default class searchEvidence extends Component {
             }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'claims';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -232,10 +249,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'degreeofevidence';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                         this.setState ({
                             evidence : response.data
@@ -256,10 +274,11 @@ export default class searchEvidence extends Component {
             }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'degreeofevidence';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -289,10 +308,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'typeOfPaper';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -313,10 +333,11 @@ export default class searchEvidence extends Component {
             }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'typeOfPaper';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -346,10 +367,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'source';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -370,10 +392,11 @@ export default class searchEvidence extends Component {
             }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'source';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -403,10 +426,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'title';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
                 .then(response => {
                         this.setState ({
                             evidence : response.data
@@ -427,10 +451,11 @@ export default class searchEvidence extends Component {
                 }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'title';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
                 .then(response => {
                         this.setState ({
                             evidence : response.data
@@ -460,10 +485,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'author';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -484,10 +510,11 @@ export default class searchEvidence extends Component {
             }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'author';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
             this.setState ({
                 evidence : response.data
@@ -517,10 +544,11 @@ export default class searchEvidence extends Component {
         if(order === "desc"){
 
             e.target.title= "asc";
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue
             const sortBy= 'yearOfPublication';
             const value = 1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                     this.setState ({
                         evidence : response.data
@@ -541,10 +569,11 @@ export default class searchEvidence extends Component {
             }
         else{
             e.target.title= "desc"
-
+            const minYear = this.state.minYearValue
+            const maxYear= this.state.maxYearValue  
             const sortBy= 'yearOfPublication';
             const value = -1;
-            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value)
+            axios.get("/evidence/?search="+searchseMethod+"&search1="+searchclaims+"&sort="+sortBy+"&value="+value+"&fromYear="+minYear+"&toYear="+maxYear)
             .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -566,13 +595,77 @@ export default class searchEvidence extends Component {
         console.log(order)
     }
 
+    onChangeMinYear = async function(e){
+        await this.setState({
+            minYearValue: e.target.value
+        })
+    }
+
+    onChangeMaxYear = async function(e){
+        await this.setState({
+            maxYearValue: e.target.value
+        })
+    }
+
+    customYearFilter = async function(e){
+        await this.setState({
+            yearFilter : 'Custom',
+            minYearValue: 1990,
+            maxYearValue: 2020 
+        })
+        console.log(this.state.minYearValue)
+        console.log(this.state.maxYearValue)
+    }
+
+    onFind5Years = async function(e){
+        const thisYear= new Date().getFullYear()
+        await this.setState({
+            yearFilter : 'Last 5 Years',
+            minYearValue: thisYear- 5,
+            maxYearValue: thisYear 
+        })
+        console.log(this.state.minYearValue)
+        console.log(this.state.maxYearValue)
+    }
+
+    onFind10Years = async function(e){ 
+        const thisYear= new Date().getFullYear()
+        await this.setState({
+            yearFilter : 'Last 10 years',
+            minYearValue: thisYear- 10,
+            maxYearValue: thisYear 
+        })
+        console.log(this.state.minYearValue)
+        console.log(this.state.maxYearValue)
+
+    }
+
+    showFilterOptions  = async function(e){ 
+        await this.setState({
+            showYearFilter : true,
+        })
+    }
+
+    clearYearFilter = async function(e){ 
+        await this.setState({
+            showYearFilter : false,
+            yearFilter : '',
+            minYearValue: 1990,
+            maxYearValue: 2020 
+        })
+        console.log(this.state.minYearValue)
+        console.log(this.state.maxYearValue)
+    }
+
     onSubmitSearch = async function(e){
         e.preventDefault();
-        
+
+        const minYear = this.state.minYearValue
+        const maxYear= this.state.maxYearValue
         const searchseMethod= this.state.searchseMethod;
         const searchclaims= this.state.searchclaims;
         if(searchclaims.length >= 1){
-        await axios.get("evidence/?search="+searchseMethod+"&search1="+searchclaims)
+        await axios.get("evidence/?search="+searchseMethod+"&search1="+searchclaims+"&fromYear="+minYear+"&toYear="+maxYear)
         .then(response => {
                 this.setState ({
                     evidence : response.data
@@ -587,8 +680,48 @@ export default class searchEvidence extends Component {
     }
 
     render(){
+        let showYearFilter = false;
+        if(this.state.showYearFilter === true){
+            showYearFilter = 
+            <div>            
+                <br/>  
+                <input type="radio" id="custom" name="years" value="Custom" onClick={this.customYearFilter}/>
+                <label for="custom">&nbsp; Custom Year Range</label>  &nbsp; &nbsp;          
+                <input type="radio" id="last5Years" name="years" value="Last 5 years" onClick={this.onFind5Years}/>
+                <label for="last5Years">&nbsp; Last 5 years</label>  &nbsp; &nbsp;
+                <input type="radio" id="last10Years" name="years" value="Last 10 years" onClick={this.onFind10Years}/>
+                <label for="last10Years">&nbsp; Last 10 years</label>
+                <button className="clear-year-btn"onClick={this.clearYearFilter}>Clear & Hide Filter</button>
+            </div> 
+        }
+        else {
+            showYearFilter = false;
+        }
+        let customYear= '';
+        if(this.state.yearFilter === "Custom"){
+            
+            customYear = 
+            <div>
+                <br/>
+                <div>
+                    <label>Select From year</label>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; 
+                    <label>Select To year</label> 
+                </div>
+                <div> 
+                    <output>{this.state.minYearValue}</output> &nbsp; 
+                    <input type="range" value={this.state.minYearValue} min="1990" max="2020" onChange={this.onChangeMinYear}/>
+                    &nbsp;
+                    <input type="range" value={this.state.maxYearValue} min="1990" max="2020" onChange={this.onChangeMaxYear}/>
+                    &nbsp; 
+                    <output>{this.state.maxYearValue}</output> &nbsp; 
+                </div>
+            </div>
+        }
+        else{
+            customYear= ''
+        }
         const {selectedClaims} = this.state;
-
         return (
             <div className="container">
                 <div className="jumbotron">
@@ -598,7 +731,7 @@ export default class searchEvidence extends Component {
              </div>
                 <h5> Select SE Method</h5>
                 <div className="select-box">
-                <Select options={Methods} onChange={this.handleChangeSearch}/>
+                <Select id="selectSE" options={Methods} onChange={this.handleChangeSearch}/>
                 </div>
                 <br/>
                 <h5> Select Claim for selected SE Method</h5>
@@ -608,6 +741,13 @@ export default class searchEvidence extends Component {
                 {selectedClaims.map( o => <p>{o.value}</p>)}
                 </div>
                 <br/>
+                <div>
+                    <button onClick={this.showFilterOptions}>Filter by Published Year</button>
+                </div>
+                {showYearFilter}
+                <div>
+                    {customYear}
+                </div>
                 <br/>
                 <button type="button" 
                 className="btn btn-primary btn-lg" 
@@ -615,7 +755,6 @@ export default class searchEvidence extends Component {
                 onClick={this.onSubmitSearch}
                 >Search</button>
                 <br/>
-                &nbsp;
                 <br/>
                 <table className="table">
                     <thead className="thead-light">
