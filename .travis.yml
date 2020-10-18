@@ -3,5 +3,4 @@ install: "travis_wait npm install"
 language: node_js
 node_js: 
   - 12
-after_: cd client/ 
-"npm run test"
+script: "cd client/ \"npm run test\""
