@@ -19,47 +19,25 @@ const searchEvidence = (req, res) => {
   const filter1 = req.query.search1;
   const claim = filter1.split(',');
 
-  const claimLength = claim.length;
   const sortBy= req.query.sort;
-  // console.log(sortBy)
   const value= req.query.value;
+  
+ const query = {$and: [{seMethod: filter}, {claims: claim}, {yearOfPublication: { $gte: req.query.fromYear, $lte: req.query.toYear }}]};
 
   if (sortBy == null) {
-    if (filter1 == 0) {
-      Evidence.find({seMethod: filter}).exec((err, seMethod ) => {
-        if ( err || !seMethod) {
-          return (err)=> res.status(400).json(err);
-        }
-        res.json(seMethod);
-      });
-    } else {
-      const query = {$and: [{seMethod: filter}, {claims: claim}]};
-
-      Evidence.find(query).exec((err, seMethod ) => {
-        if ( err || !seMethod) {
-          return (err)=> res.status(400).json(err);
-        }
-        res.json(seMethod);
-      });
-    }
+    Evidence.find(query).exec((err, seMethod ) => {
+      if ( err || !seMethod) {
+        return (err)=> res.status(400).json(err);
+      }
+      res.json(seMethod);
+    });
   } else {
-    if (filter1 == 0) {
-      Evidence.find({seMethod: filter}).sort({[sortBy]: value}).exec((err, seMethod ) => {
-        if ( err || !seMethod) {
-          return (err)=> res.status(400).json(err);
-        }
-        res.json(seMethod);
-      });
-    } else {
-      const query = {$and: [{seMethod: filter}, {claims: claim}]};
-
-      Evidence.find(query).sort({[sortBy]: value}).exec((err, seMethod ) => {
-        if ( err || !seMethod) {
-          return (err)=> res.status(400).json(err);
-        }
-        res.json(seMethod);
-      });
-    }
+    Evidence.find(query).sort({[sortBy]: value}).exec((err, seMethod ) => {
+      if ( err || !seMethod) {
+        return (err)=> res.status(400).json(err);
+      }
+      res.json(seMethod);
+    });
   }
 };
 
