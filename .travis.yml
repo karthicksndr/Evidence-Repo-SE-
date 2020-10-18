@@ -6,8 +6,7 @@ jobs:
         - "cd client/"
         - "npm install react"
       script: "npm run test"
-      stage: "Run Unit tests"
+      stage: "Run frontend unit tests"
 language: node_js
 node_js: 
   - 12
-script: "cd client/ \"npm run test\""
