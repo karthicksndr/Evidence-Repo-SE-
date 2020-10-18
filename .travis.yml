@@ -1,5 +1,12 @@
 --- 
-install: "travis_wait npm install"
+jobs: 
+  include: 
+    - 
+      before_script: 
+        - "cd client/"
+        - "npm install react"
+      script: "npm run test"
+      stage: "Run Unit tests"
 language: node_js
 node_js: 
   - 12
