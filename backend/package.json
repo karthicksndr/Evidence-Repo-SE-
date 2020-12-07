@@ -7,7 +7,7 @@
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run build",
-    "start": "cd backend && node server.js",
+    "start": "node server.js",
     "client": "cd client && npm start",
     "dev": "concurrently -n 'server,client' -c 'red,green'  \"cd backend && node server.js\" \"npm run client\"",
     "test": "mocha 'backend/test/*.js' --timeout 9999999 mocha --exit"

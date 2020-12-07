@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seer-db
+spec:
+  selector:
+    matchLabels:
+      app: seer-db
+      tier: backend
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: seer-db
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: db
+          image: "karthicksndr/seer-db:2"
+          ports:
+            - name: http
+              containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seer-backend
+spec:
+  selector:
+    app: seer-db
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000

@@ -48,7 +48,7 @@ app.use('/user', userRouter);
 app.use('/evidence', evidenceRouter);
 app.use('/auth', authRouter);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0',() => {
   console.log(`server running on port ${port}`);
 });
 
